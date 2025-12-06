@@ -3,7 +3,7 @@
 シンプルで軽量な 2048 パズルゲーム を、HTML / CSS / JavaScript だけで実装したものです。
 インストール不要で、ブラウザがあればすぐに遊べます。
 
-Play Now!!： https://takkunlego0916.f5.si
+Play Now!!： https://takkunlego0916.f5.si/
 
 # ゲーム概要
 
@@ -19,3 +19,13 @@ PCは矢印キー（←↑→↓）、スマホやタブレットはスワイプ
 	•	軽量で高速（ロード数百ms）
 	•	2048 達成演出あり
 	•	コードはゲームロジックがシンプルで学習にも最適
+
+# ライセンス
+
+MIT License(https://mit-license.org)
+自由に改造・再配布できます。
+
+# お問い合わせ
+
+バグ報告・改善案などは Issues またはDiscordのDMまで気軽にどうぞ！
+DiscordID : takkun_mc_jp
