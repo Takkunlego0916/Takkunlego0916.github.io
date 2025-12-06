@@ -525,3 +525,41 @@ function ensureLayers() {
     boardEl.appendChild(tilesLayer);
   }
 }
+
+let inputLock = false;
+
+async function safeMove(dir) {
+  if (inputLock) return;
+  inputLock = true;
+  try {
+    await move(dir); // move は Promise を返す（既に async 実装）
+    // move の後に canMove 判定などを行う
+    if (!canMove()) showOverlay('Game Over', 'これ以上動けません', { showContinue: false });
+  } finally {
+    inputLock = false;
+  }
+}
+
+// キーボード
+window.addEventListener('keydown', (e) => {
+  if (inputLock) return;
+  if (e.key === 'ArrowLeft') safeMove('left');
+  if (e.key === 'ArrowRight') safeMove('right');
+  if (e.key === 'ArrowUp') safeMove('up');
+  if (e.key === 'ArrowDown') safeMove('down');
+});
+
+// タッチ
+boardEl.addEventListener('touchend', (e) => {
+  if (inputLock) return;
+  const t = e.changedTouches[0];
+  const dx = t.clientX - startX;
+  const dy = t.clientY - startY;
+  if (Math.abs(dx) > Math.abs(dy)) {
+    if (dx > 30) safeMove('right');
+    else if (dx < -30) safeMove('left');
+  } else {
+    if (dy > 30) safeMove('down');
+    else if (dy < -30) safeMove('up');
+  }
+}, { passive: true });
