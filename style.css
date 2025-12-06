@@ -20,44 +20,14 @@ body{
   padding:20px;
 }
 
-/* コンテナ */
-#container{
-  width:360px;
-  max-width:95vw;
-}
+#container{ width:360px; max-width:95vw; }
+.title{ margin:0 0 12px 0; font-size:36px; letter-spacing:2px; text-align:left; }
 
-/* タイトル */
-.title{
-  margin:0 0 12px 0;
-  font-size:36px;
-  letter-spacing:2px;
-  text-align:left;
-}
+.scoreboard{ display:flex; gap:10px; margin-bottom:12px; }
+.score-box{ background:#eee4da; padding:8px 12px; border-radius:6px; text-align:center; min-width:90px; }
+.score-box .label{ font-size:12px; color:#776e65; }
+.score-box .value{ font-weight:700; font-size:18px; margin-top:4px; }
 
-/* スコア表示 */
-.scoreboard{
-  display:flex;
-  gap:10px;
-  margin-bottom:12px;
-}
-.score-box{
-  background:#eee4da;
-  padding:8px 12px;
-  border-radius:6px;
-  text-align:center;
-  min-width:90px;
-}
-.score-box .label{
-  font-size:12px;
-  color:#776e65;
-}
-.score-box .value{
-  font-weight:700;
-  font-size:18px;
-  margin-top:4px;
-}
-
-/* ボード */
 .board{
   background:var(--board);
   padding:12px;
@@ -67,8 +37,6 @@ body{
   gap:12px;
   touch-action: none;
 }
-
-/* 空セル */
 .cell{
   background:var(--cell);
   height:72px;
@@ -77,8 +45,6 @@ body{
   align-items:center;
   justify-content:center;
 }
-
-/* タイル */
 .tile{
   min-width:64px;
   height:64px;
@@ -89,10 +55,13 @@ body{
   font-weight:700;
   font-size:22px;
   color:var(--tile-light);
-  transition: transform .12s ease, background .12s ease;
+  transition: transform .12s ease, background .12s ease, opacity .12s ease;
+  will-change: transform, opacity;
+  pointer-events:none; /* ← タイルがタッチを奪わないように */
 }
+.tile.pop{ animation: pop .12s ease; }
+@keyframes pop{ 0%{transform:scale(.3);opacity:0} 60%{transform:scale(1.08);opacity:1} 100%{transform:scale(1)} }
 
-/* 値ごとの色（代表） */
 .tile-2{ background:#eee4da; color:#776e65; }
 .tile-4{ background:#ede0c8; color:#776e65; }
 .tile-8{ background:#f2b179; }
@@ -105,37 +74,22 @@ body{
 .tile-1024{ background:#edc53f; color:#776e65; font-size:16px; }
 .tile-2048{ background:#edc22e; color:#776e65; font-size:16px; }
 
-/* ボタン */
 .controls{ margin-top:12px; display:flex; justify-content:flex-start; }
-.btn-red{
-  background:var(--btn);
-  color:white;
-  border:none;
-  padding:10px 16px;
-  border-radius:6px;
-  font-weight:700;
-  cursor:pointer;
-  box-shadow:0 2px 0 rgba(0,0,0,0.15);
-}
+.btn-red{ background:var(--btn); color:white; border:none; padding:10px 16px; border-radius:6px; font-weight:700; cursor:pointer; box-shadow:0 2px 0 rgba(0,0,0,0.15); }
 .btn-red:active{ transform:translateY(1px) }
 
-/* レスポンシブ微調整 */
 @media (max-width:420px){
   .tile{ min-width:56px; height:56px; font-size:18px }
   .cell{ height:60px }
 }
-/* タイルの出現・移動・マージアニメ */
-.tile { transition: transform .12s ease, background .12s ease, opacity .12s ease; will-change: transform, opacity; }
-.tile.pop { animation: pop .12s ease; }
-@keyframes pop { 0%{transform:scale(.3);opacity:0} 60%{transform:scale(1.08);opacity:1} 100%{transform:scale(1)} }
 
-/* オーバーレイ（ゲームオーバー／勝利） */
+/* オーバーレイ */
 .overlay{
   position:fixed; inset:0; display:flex;align-items:center;justify-content:center;
   background:rgba(0,0,0,0.45); z-index:50; visibility:hidden; opacity:0; transition:opacity .18s;
+  pointer-events:none;
 }
-.overlay.show{ visibility:visible; opacity:1; }
+.overlay.show{ visibility:visible; opacity:1; pointer-events:auto; }
 .overlay .panel{ background:white;padding:20px;border-radius:8px;text-align:center; min-width:260px; }
 .overlay .panel h2{ margin:0 0 8px 0 }
 .overlay .panel button{ margin-top:12px; padding:8px 12px; border-radius:6px; }
-
