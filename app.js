@@ -22,7 +22,7 @@ function loadState(){
 }
 
 // レンダリング
-function render(){
+function renderWithAnimation(){
   boardEl.innerHTML = '';
   for(let i=0;i<16;i++){
     const cell = document.createElement('div');
@@ -59,7 +59,7 @@ function addRandomPreferBottomLeft(){
 }
 
 // 通常のランダム追加（補助としても使う）
-function addRandom(){
+function addRandomWithPop(){
   const empt = grid.map((v,i)=>v===0?i:null).filter(v=>v!==null);
   if(!empt.length) return;
   const idx = empt[Math.floor(Math.random()*empt.length)];
@@ -245,3 +245,92 @@ function showOverlay(title,msg){ document.getElementById('ov-title').textContent
 // checkEnd() 内で alert の代わりに showOverlay を呼ぶ
 if(grid.includes(2048)) showOverlay('You win!','2048 を達成しました');
 if(gameOver) showOverlay('Game Over','これ以上動けません');
+
+/* --- アニメ用ヘルパー --- */
+
+// タイル DOM を管理するマップ: index -> element
+const tileEls = {}; // key: uniqueId (生成), value: {el, index, value}
+let tileUid = 1;
+
+// セルの左上座標を取得（board 内での相対位置）
+function getCellRect(boardEl) {
+  const rect = boardEl.getBoundingClientRect();
+  const gap = 10; // 既存の gap に合わせる（必要なら調整）
+  const size = (rect.width - gap * 5) / 4; // gap が 10px の想定
+  return { size, gap, boardLeft: rect.left, boardTop: rect.top };
+}
+
+// 指定インデックス(0..15)に対応する translate 値を返す
+function indexToTranslate(index) {
+  const { size, gap } = getCellRect(boardEl);
+  const row = Math.floor(index / 4);
+  const col = index % 4;
+  const x = gap + col * (size + gap);
+  const y = gap + row * (size + gap);
+  return { x, y, size };
+}
+
+// 新しいタイル要素を作る（アニメ用）
+function createTileElement(index, value, pop = true) {
+  const uid = tileUid++;
+  const tile = document.createElement('div');
+  tile.className = 'tile tile-' + value + (pop ? ' pop' : '');
+  tile.textContent = value;
+  tile.style.position = 'absolute';
+  const pos = indexToTranslate(index);
+  tile.style.width = pos.size + 'px';
+  tile.style.height = pos.size + 'px';
+  tile.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+  boardEl.appendChild(tile);
+  tileEls[uid] = { el: tile, index, value };
+  // remove pop class after animation
+  if(pop) tile.addEventListener('animationend', ()=> tile.classList.remove('pop'), { once: true });
+  return uid;
+}
+
+// 既存のセル内にあるテキスト要素をタイル化（初回レンダリング用）
+function convertCellsToTiles() {
+  // 既存の board がセル div を持っている前提。grid 配列に従ってタイルを作る
+  // まず既存の tileEls を消す
+  Object.values(tileEls).forEach(t => { if(t.el.parentNode) t.el.parentNode.removeChild(t.el); });
+  Object.keys(tileEls).forEach(k => delete tileEls[k]);
+  tileUid = 1;
+  for(let i=0;i<16;i++){
+    if(grid[i]){
+      createTileElement(i, grid[i], true);
+    }
+  }
+}
+
+// タイルを index -> index に移動（transform で滑らかに）
+function moveTileUidTo(uid, toIndex) {
+  const t = tileEls[uid];
+  if(!t) return Promise.resolve();
+  const pos = indexToTranslate(toIndex);
+  // update size in case of resize
+  t.el.style.width = pos.size + 'px';
+  t.el.style.height = pos.size + 'px';
+  return new Promise(resolve => {
+    const onEnd = (ev) => {
+      if(ev.propertyName !== 'transform') return;
+      t.el.removeEventListener('transitionend', onEnd);
+      t.index = toIndex;
+      resolve();
+    };
+    t.el.addEventListener('transitionend', onEnd);
+    // trigger transform
+    requestAnimationFrame(()=> t.el.style.transform = `translate(${pos.x}px, ${pos.y}px)`);
+  });
+}
+
+// 指定 uid を削除（フェードアウト）
+function removeTileUid(uid) {
+  const t = tileEls[uid];
+  if(!t) return;
+  t.el.style.opacity = '0';
+  t.el.addEventListener('transitionend', function fn(){
+    t.el.removeEventListener('transitionend', fn);
+    if(t.el.parentNode) t.el.parentNode.removeChild(t.el);
+  }, { once: true });
+  delete tileEls[uid];
+}
