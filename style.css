@@ -124,3 +124,18 @@ body{
   .tile{ min-width:56px; height:56px; font-size:18px }
   .cell{ height:60px }
 }
+/* タイルの出現・移動・マージアニメ */
+.tile { transition: transform .12s ease, background .12s ease, opacity .12s ease; will-change: transform, opacity; }
+.tile.pop { animation: pop .12s ease; }
+@keyframes pop { 0%{transform:scale(.3);opacity:0} 60%{transform:scale(1.08);opacity:1} 100%{transform:scale(1)} }
+
+/* オーバーレイ（ゲームオーバー／勝利） */
+.overlay{
+  position:fixed; inset:0; display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0.45); z-index:50; visibility:hidden; opacity:0; transition:opacity .18s;
+}
+.overlay.show{ visibility:visible; opacity:1; }
+.overlay .panel{ background:white;padding:20px;border-radius:8px;text-align:center; min-width:260px; }
+.overlay .panel h2{ margin:0 0 8px 0 }
+.overlay .panel button{ margin-top:12px; padding:8px 12px; border-radius:6px; }
+
