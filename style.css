@@ -93,3 +93,14 @@ body{
 .overlay .panel{ background:white;padding:20px;border-radius:8px;text-align:center; min-width:260px; }
 .overlay .panel h2{ margin:0 0 8px 0 }
 .overlay .panel button{ margin-top:12px; padding:8px 12px; border-radius:6px; }
+
+.board {
+  position: relative;
+  width: 360px;
+  height: 360px;
+}
+
+.tile {
+  position: absolute;
+  transition: transform .18s cubic-bezier(.2,.8,.2,1);
+}
