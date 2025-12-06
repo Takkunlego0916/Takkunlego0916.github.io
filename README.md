@@ -13,7 +13,7 @@ PCは矢印キー（←↑→↓）、スマホやタブレットはスワイプ
 # 主な特徴
 	•	100% HTML / CSS / JavaScript（フレームワークなし）
 	•	GitHub Pages で作成
-    • 完全オープンソース(Open Source)
+    •   完全オープンソース(Open Source)
 	•	スマホ・PC両対応
 	•	スワイプ操作対応
 	•	軽量で高速（ロード数百ms）
