@@ -65,23 +65,42 @@ boardEl.addEventListener('touchend', e => {
   }
 }, { passive: true });
 
+function slide(row){
+  let arr = row.filter(v => v !== 0);
+  let result = [];
+  for(let i=0; i<arr.length; i++){
+    if(arr[i] === arr[i+1]){
+      result.push(arr[i]*2);
+      score += arr[i]*2;
+      if(score > best) best = score;
+      i++;
+    } else {
+      result.push(arr[i]);
+    }
+  }
+  while(result.length < 4){
+    result.push(0);
+  }
+  return result;
+}
+
 function move(dir){
   let moved = false;
   for(let r=0; r<4; r++){
     let line = [];
     for(let c=0; c<4; c++){
-      const idx = dir === 'left' ? r*4 + c :
-                  dir === 'right' ? r*4 + (3-c) :
-                  dir === 'up' ? c*4 + r :
-                  (3-c)*4 + r;
+      const idx = dir === 'left' ? r*4+c :
+                  dir === 'right' ? r*4+(3-c) :
+                  dir === 'up' ? c*4+r :
+                  (3-c)*4+r;
       line.push(grid[idx]);
     }
     const out = slide(line);
     for(let c=0; c<4; c++){
-      const idx = dir === 'left' ? r*4 + c :
-                  dir === 'right' ? r*4 + (3-c) :
-                  dir === 'up' ? c*4 + r :
-                  (3-c)*4 + r;
+      const idx = dir === 'left' ? r*4+c :
+                  dir === 'right' ? r*4+(3-c) :
+                  dir === 'up' ? c*4+r :
+                  (3-c)*4+r;
       if(grid[idx] !== out[c]){
         grid[idx] = out[c];
         moved = true;
@@ -94,8 +113,5 @@ function move(dir){
   }
 }
 
-
-
 newBtn.addEventListener('click',startGame);
-
 startGame();
