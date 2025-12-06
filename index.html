@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>2048</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div id="container">
@@ -21,10 +21,22 @@
       </div>
     </div>
 
-    <div id="board" class="board" aria-label="2048 board"></div>
+    <div id="board" class="board"></div>
 
     <div class="controls">
       <button id="new" class="btn-red">New Game</button>
+    </div>
+  </div>
+
+  <!-- オーバーレイ -->
+  <div id="overlay" class="overlay" aria-hidden="true">
+    <div class="panel">
+      <h2 id="ov-title"></h2>
+      <div id="ov-msg"></div>
+      <div class="actions">
+        <button id="ov-continue" class="btn">続ける</button>
+        <button id="ov-new" class="btn btn-red">New Game</button>
+      </div>
     </div>
   </div>
 
