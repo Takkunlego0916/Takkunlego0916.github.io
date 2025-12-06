@@ -33,11 +33,11 @@ function addRandom(){
 function startGame(){
   grid=new Array(16).fill(0);
   score=0;
-  addRandom(); addRandom();
+  addRandom(); 
+  addRandom();
   render();
 }
 
 newBtn.addEventListener('click',startGame);
 
-// 初期化
 startGame();
