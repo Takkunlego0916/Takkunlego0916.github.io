@@ -8,4 +8,20 @@ body {
 canvas {
   border: 2px solid #fff;
   background: #000;
+  display: block;
+  margin: 0 auto;
+}
+
+#ui {
+  margin-bottom: 10px;
+}
+
+#score {
+  font-size: 20px;
+  margin: 5px;
+}
+
+#instructions {
+  font-size: 14px;
+  color: #ccc;
 }
