@@ -393,12 +393,13 @@ if (ovNew) ovNew.addEventListener('click', () => { startNewGame(); hideOverlay()
 if (ovContinue) ovContinue.addEventListener('click', () => { hideOverlay(); });
 
 /* ---------- 入力（キーボード / タッチ） ---------- */
-window.addEventListener('keydown', e => {
-  if (e.key === 'ArrowLeft') move('left');
-  if (e.key === 'ArrowRight') move('right');
-  if (e.key === 'ArrowUp') move('up');
-  if (e.key === 'ArrowDown') move('down');
+window.addEventListener('keydown', async (e) => {
+  if (e.key === 'ArrowLeft')  { await move('left');  if (!canMove()) showOverlay('Game Over', 'これ以上動けません', { showContinue: false }); }
+  if (e.key === 'ArrowRight') { await move('right'); if (!canMove()) showOverlay('Game Over', 'これ以上動けません', { showContinue: false }); }
+  if (e.key === 'ArrowUp')    { await move('up');    if (!canMove()) showOverlay('Game Over', 'これ以上動けません', { showContinue: false }); }
+  if (e.key === 'ArrowDown')  { await move('down');  if (!canMove()) showOverlay('Game Over', 'これ以上動けません', { showContinue: false }); }
 });
+
 
 let startX = 0, startY = 0;
 boardEl.addEventListener('touchstart', e => {
@@ -407,18 +408,20 @@ boardEl.addEventListener('touchstart', e => {
   startY = t.clientY;
 }, { passive: true });
 
-boardEl.addEventListener('touchend', e => {
+// タッチ（async に変更）
+boardEl.addEventListener('touchend', async (e) => {
   const t = e.changedTouches[0];
   const dx = t.clientX - startX;
   const dy = t.clientY - startY;
   if (Math.abs(dx) > Math.abs(dy)) {
-    if (dx > 30) move('right');
-    else if (dx < -30) move('left');
+    if (dx > 30)  { await move('right'); if (!canMove()) showOverlay('Game Over', 'これ以上動けません', { showContinue: false }); }
+    else if (dx < -30) { await move('left'); if (!canMove()) showOverlay('Game Over', 'これ以上動けません', { showContinue: false }); }
   } else {
-    if (dy > 30) move('down');
-    else if (dy < -30) move('up');
+    if (dy > 30)  { await move('down');  if (!canMove()) showOverlay('Game Over', 'これ以上動けません', { showContinue: false }); }
+    else if (dy < -30) { await move('up');    if (!canMove()) showOverlay('Game Over', 'これ以上動けません', { showContinue: false }); }
   }
 }, { passive: true });
+
 
 /* ---------- 新規ゲーム / 初期化 ---------- */
 function addRandomInitialPreferBottomLeft() {
@@ -473,3 +476,25 @@ function init() {
 
 init();
 
+// 盤面にまだ動ける手があるかを返す（true = 動ける）
+function canMove() {
+  // 空きがあれば動ける
+  if (grid.includes(0)) return true;
+
+  // 横に同じ数字が隣接していれば動ける
+  for (let r = 0; r < 4; r++) {
+    for (let c = 0; c < 3; c++) {
+      if (grid[r * 4 + c] === grid[r * 4 + c + 1]) return true;
+    }
+  }
+
+  // 縦に同じ数字が隣接していれば動ける
+  for (let c = 0; c < 4; c++) {
+    for (let r = 0; r < 3; r++) {
+      if (grid[r * 4 + c] === grid[(r + 1) * 4 + c]) return true;
+    }
+  }
+
+  // それ以外は動けない（ゲームオーバー）
+  return false;
+}
