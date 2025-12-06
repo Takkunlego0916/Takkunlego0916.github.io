@@ -1,7 +1,126 @@
-:root{--bg:#faf8ef;--tile:#cdc1b4;--board:#bbada0}
-*{box-sizing:border-box}body{font-family:system-ui,Arial;background:var(--bg);display:flex;align-items:center;justify-content:center;height:100vh;margin:0;color:#776e65}
-#game{width:340px}
-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.board{background:var(--board);padding:10px;border-radius:6px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.cell{height:70px;background:var(--tile);border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px}
-.tile{transition:transform .12s,background .12s;color:#f9f6f2;padding:6px;border-radius:4px}
+:root{
+  --bg:#faf8ef;
+  --board:#bbada0;
+  --cell:#cdc1b4;
+  --tile-dark:#776e65;
+  --tile-light:#f9f6f2;
+  --btn:#e74c3c;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  background:var(--bg);
+  color:var(--tile-dark);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+/* コンテナ */
+#container{
+  width:360px;
+  max-width:95vw;
+}
+
+/* タイトル */
+.title{
+  margin:0 0 12px 0;
+  font-size:36px;
+  letter-spacing:2px;
+  text-align:left;
+}
+
+/* スコア表示 */
+.scoreboard{
+  display:flex;
+  gap:10px;
+  margin-bottom:12px;
+}
+.score-box{
+  background:#eee4da;
+  padding:8px 12px;
+  border-radius:6px;
+  text-align:center;
+  min-width:90px;
+}
+.score-box .label{
+  font-size:12px;
+  color:#776e65;
+}
+.score-box .value{
+  font-weight:700;
+  font-size:18px;
+  margin-top:4px;
+}
+
+/* ボード */
+.board{
+  background:var(--board);
+  padding:12px;
+  border-radius:6px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  touch-action: none;
+}
+
+/* 空セル */
+.cell{
+  background:var(--cell);
+  height:72px;
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* タイル */
+.tile{
+  min-width:64px;
+  height:64px;
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:22px;
+  color:var(--tile-light);
+  transition: transform .12s ease, background .12s ease;
+}
+
+/* 値ごとの色（代表） */
+.tile-2{ background:#eee4da; color:#776e65; }
+.tile-4{ background:#ede0c8; color:#776e65; }
+.tile-8{ background:#f2b179; }
+.tile-16{ background:#f59563; }
+.tile-32{ background:#f67c5f; }
+.tile-64{ background:#f65e3b; }
+.tile-128{ background:#edcf72; color:#776e65; font-size:18px; }
+.tile-256{ background:#edcc61; color:#776e65; font-size:18px; }
+.tile-512{ background:#edc850; color:#776e65; font-size:18px; }
+.tile-1024{ background:#edc53f; color:#776e65; font-size:16px; }
+.tile-2048{ background:#edc22e; color:#776e65; font-size:16px; }
+
+/* ボタン */
+.controls{ margin-top:12px; display:flex; justify-content:flex-start; }
+.btn-red{
+  background:var(--btn);
+  color:white;
+  border:none;
+  padding:10px 16px;
+  border-radius:6px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 2px 0 rgba(0,0,0,0.15);
+}
+.btn-red:active{ transform:translateY(1px) }
+
+/* レスポンシブ微調整 */
+@media (max-width:420px){
+  .tile{ min-width:56px; height:56px; font-size:18px }
+  .cell{ height:60px }
+}
