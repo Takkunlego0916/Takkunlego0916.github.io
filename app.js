@@ -199,3 +199,49 @@ if(!grid.some(v=>v!==0)){
   addRandomPreferBottomLeft();
 }
 render();
+// render() 内で新規タイルに pop クラスを付与する例
+function render(newTiles=[]){
+  boardEl.innerHTML='';
+  for(let i=0;i<16;i++){
+    const cell=document.createElement('div'); cell.className='cell';
+    const val=grid[i];
+    if(val){
+      const tile=document.createElement('div');
+      tile.className='tile tile-'+val;
+      tile.textContent=val;
+      if(newTiles.includes(i)) tile.classList.add('pop');
+      cell.appendChild(tile);
+    }
+    boardEl.appendChild(cell);
+  }
+  scoreEl.textContent=score; bestEl.textContent=best; saveState();
+}
+
+// addRandom を newTiles を返すようにして render に渡す
+function addRandomPreferBottomLeft(){
+  const order=[12,8,4,0,13,9,5,1,14,10,6,2,15,11,7,3];
+  const empt=order.filter(i=>grid[i]===0);
+  if(!empt.length) return [];
+  const idx=empt[Math.floor(Math.random()*empt.length)];
+  grid[idx]=Math.random()<0.9?2:4;
+  return [idx];
+}
+
+// move() の最後で新タイル位置を受け取り render(newTiles)
+if(moved){
+  const newTiles = addRandom();
+  render(Array.isArray(newTiles)?newTiles:[]);
+  checkEnd();
+}
+
+// オーバーレイ制御
+const overlay=document.createElement('div'); overlay.className='overlay';
+overlay.innerHTML=`<div class="panel"><h2 id="ov-title"></h2><div id="ov-msg"></div><button id="ov-new">New Game</button></div>`;
+document.body.appendChild(overlay);
+document.getElementById('ov-new').addEventListener('click', ()=>{ overlay.classList.remove('show'); newBtn.click(); });
+
+function showOverlay(title,msg){ document.getElementById('ov-title').textContent=title; document.getElementById('ov-msg').textContent=msg; overlay.classList.add('show'); }
+
+// checkEnd() 内で alert の代わりに showOverlay を呼ぶ
+if(grid.includes(2048)) showOverlay('You win!','2048 を達成しました');
+if(gameOver) showOverlay('Game Over','これ以上動けません');
