@@ -78,7 +78,7 @@ function createTileAt(index, value, opts = { pop: true }) {
   const pos = indexToXY(index);
   el.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
   if (opts.pop) el.classList.add('pop');
-  boardEl.appendChild(el);
+document.getElementById('tiles-layer').appendChild(el);
   if (opts.pop) {
     el.addEventListener('animationend', () => el.classList.remove('pop'), { once: true });
   }
