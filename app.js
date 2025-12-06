@@ -65,6 +65,36 @@ boardEl.addEventListener('touchend', e => {
   }
 }, { passive: true });
 
+function move(dir){
+  let moved = false;
+  for(let r=0; r<4; r++){
+    let line = [];
+    for(let c=0; c<4; c++){
+      const idx = dir === 'left' ? r*4 + c :
+                  dir === 'right' ? r*4 + (3-c) :
+                  dir === 'up' ? c*4 + r :
+                  (3-c)*4 + r;
+      line.push(grid[idx]);
+    }
+    const out = slide(line);
+    for(let c=0; c<4; c++){
+      const idx = dir === 'left' ? r*4 + c :
+                  dir === 'right' ? r*4 + (3-c) :
+                  dir === 'up' ? c*4 + r :
+                  (3-c)*4 + r;
+      if(grid[idx] !== out[c]){
+        grid[idx] = out[c];
+        moved = true;
+      }
+    }
+  }
+  if(moved){
+    addRandom();
+    render();
+  }
+}
+
+
 
 newBtn.addEventListener('click',startGame);
 
