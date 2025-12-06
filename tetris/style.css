@@ -1,6 +1,13 @@
 :root{--cell:24px}
-body{display:flex;gap:12px;background:#111;color:#fff;font-family:Arial;padding:20px}
-#board{background:#000;border:4px solid #333}
-#side{display:flex;flex-direction:column;gap:10px}
-button{padding:8px;margin:4px;border-radius:6px;border:none;cursor:pointer}
-#controls button{background:#1976d2;color:#fff}
+*{box-sizing:border-box}body{margin:0;background:#121212;color:#fff;font-family:system-ui;display:flex;min-height:100vh;align-items:center;justify-content:center}
+#main{display:flex;gap:16px;align-items:flex-start}
+#board{background:#000;border:4px solid #333;width:calc(var(--cell)*9);height:calc(var(--cell)*20)}
+#side{width:140px}
+#side h3{margin:0 0 8px 0}
+.stat{margin:6px 0}
+#mobile-controls{position:fixed;left:0;right:0;bottom:0;padding:10px;background:transparent;display:flex;flex-direction:column;gap:8px;align-items:center}
+.row{width:100%;display:flex;justify-content:center;gap:12px}
+.btn{padding:12px 18px;border-radius:10px;border:none;font-size:16px}
+.blue{background:#4fc3f7;color:#000} .red{background:#ef5350;color:#fff}.lime{background:#c6ff00;color:#000}.green{background:#c8e6c9;color:#000}
+.leftmost{margin-right:auto} .rightmost{margin-left:auto}
+@media(min-width:700px){#mobile-controls{display:none}}
