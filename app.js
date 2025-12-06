@@ -113,5 +113,16 @@ boardEl.addEventListener('touchend', e => {
   }
 }, { passive: true });
 
+function setTilePosition(tileEl, index){
+  const size = 72;
+  const gap = 12; 
+  const row = Math.floor(index/4);
+  const col = index % 4;
+  const x = col*(size+gap);
+  const y = row*(size+gap);
+  tileEl.style.transform = `translate(${x}px,${y}px)`;
+}
+
+
 newBtn.addEventListener('click',startGame);
 startGame();
