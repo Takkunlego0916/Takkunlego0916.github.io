@@ -1,24 +1,23 @@
-<!doctype html>
-<html lang="ja">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tetris</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<canvas id="board" width="240" height="480"></canvas>
-<div id="side">
-  <canvas id="next" width="80" height="80"></canvas>
-  <div id="stats"><div>レベル:<span id="level">1</span></div><div>ライン:<span id="lines">0</span></div><div>点数:<span id="score">0</span></div></div>
-  <div id="controls">
-    <button id="rotate">回転</button><button id="drop">落下</button>
-    <button id="left">◀</button><button id="down">▼</button><button id="right">▶</button>
-    <button id="pause">ポーズ</button><button id="new">New Game</button>
-  </div>
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tetris</title><link rel="stylesheet" href="style.css"></head><body>
+<div id="wrap">
+  <main id="main">
+    <canvas id="board" width="216" height="480"></canvas>
+    <aside id="side">
+      <h3>次のブロック</h3><canvas id="next" width="72" height="72"></canvas>
+      <div class="stat">レベル:<span id="level">1</span></div>
+      <div class="stat">ライン:<span id="lines">0</span></div>
+      <div class="stat">点数:<span id="score">0</span></div>
+    </aside>
+  </main>
 </div>
-<script src="pieces.js"></script>
-<script src="game.js"></script>
-<script src="ui.js"></script>
-</body>
-</html>
+
+<!-- モバイル操作パネル -->
+<nav id="mobile-controls">
+  <div class="row top"><button id="rotate" class="btn green">回転</button></div>
+  <div class="row arrows"><button id="left" class="btn blue">◀</button><button id="down" class="btn blue">▼</button><button id="right" class="btn blue">▶</button></div>
+  <div class="row mid"><button id="drop" class="btn lime">落下</button></div>
+  <div class="row bottom"><button id="pause" class="btn blue leftmost">ポーズ</button><button id="new" class="btn red rightmost">New Game</button></div>
+</nav>
+
+<script src="pieces.js"></script><script src="game.js"></script><script src="ui.js"></script>
+</body></html>
