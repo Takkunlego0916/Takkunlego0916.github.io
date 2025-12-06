@@ -78,8 +78,7 @@ function createTileAt(index, value, opts = { pop: true }) {
   const pos = indexToXY(index);
   el.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
   if (opts.pop) el.classList.add('pop');
-BoadEl.appendChild(el);
-  ('tiles-layer').appendChild(el);
+  boardEl.appendChild(el);
   if (opts.pop) {
     el.addEventListener('animationend', () => el.classList.remove('pop'), { once: true });
   }
@@ -499,31 +498,3 @@ function canMove() {
   // それ以外は動けない（ゲームオーバー）
   return false;
 }
-
-// 初期化時に board の中に2つのレイヤーを作る（1回だけ）
-function ensureLayers() {
-  if (!document.getElementById('grid-bg')) {
-    const gridBg = document.createElement('div');
-    gridBg.id = 'grid-bg';
-    gridBg.style.display = 'grid';
-    gridBg.style.gridTemplateColumns = 'repeat(4,1fr)';
-    gridBg.style.gap = `${layout.gap}px`;
-    gridBg.style.position = 'absolute';
-    gridBg.style.inset = '0';
-    gridBg.style.zIndex = '1';
-    for (let i = 0; i < 16; i++) {
-      const cell = document.createElement('div');
-      cell.className = 'cell-bg';
-      gridBg.appendChild(cell);
-    }
-    const tilesLayer = document.createElement('div');
-    tilesLayer.id = 'tiles-layer';
-    tilesLayer.style.position = 'absolute';
-    tilesLayer.style.inset = '0';
-    tilesLayer.style.zIndex = '2';
-    boardEl.style.position = 'relative';
-    boardEl.appendChild(gridBg);
-    boardEl.appendChild(tilesLayer);
-  }
-}
-
