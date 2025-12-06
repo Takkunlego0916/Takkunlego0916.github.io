@@ -22,7 +22,7 @@ function loadState(){
 }
 
 // レンダリング
-function renderWithAnimation(){
+function render(){
   boardEl.innerHTML = '';
   for(let i=0;i<16;i++){
     const cell = document.createElement('div');
@@ -59,7 +59,7 @@ function addRandomPreferBottomLeft(){
 }
 
 // 通常のランダム追加（補助としても使う）
-function addRandomWithPop(){
+function addRandom(){
   const empt = grid.map((v,i)=>v===0?i:null).filter(v=>v!==null);
   if(!empt.length) return;
   const idx = empt[Math.floor(Math.random()*empt.length)];
