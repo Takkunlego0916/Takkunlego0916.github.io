@@ -139,3 +139,40 @@ body{
 .overlay .panel h2{ margin:0 0 8px 0 }
 .overlay .panel button{ margin-top:12px; padding:8px 12px; border-radius:6px; }
 
+/* --- 追加: アニメーション関連 --- */
+.board { position: relative; } /* 既にあれば重複してもOK */
+
+.cell { position: relative; } /* 既存のセルは相対にしておく */
+
+.tile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc((100% - 3 * 10px) / 4); /* 既存の gap に合わせて調整（例: gap=10px） */
+  height: calc((100% - 3 * 10px) / 4);
+  border-radius: 4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition: transform .18s cubic-bezier(.2,.8,.2,1), opacity .12s;
+  will-change: transform, opacity;
+  z-index: 2;
+}
+
+/* 出現ポップ */
+.tile.pop { animation: pop .12s ease; }
+@keyframes pop { 0%{ transform: scale(.3); opacity:0 } 60%{ transform: scale(1.08); opacity:1 } 100%{ transform: scale(1) } }
+
+/* 合体ポップ */
+.tile.merge { animation: merge .14s ease; }
+@keyframes merge { 0%{ transform: scale(1) } 50%{ transform: scale(1.18) } 100%{ transform: scale(1) } }
+
+/* オーバーレイ（ゲームオーバー / 勝利） */
+#overlay {
+  position: fixed; inset: 0; display:flex; align-items:center; justify-content:center;
+  background: rgba(0,0,0,0.45); z-index: 100; visibility: hidden; opacity: 0; transition: opacity .18s;
+}
+#overlay.show { visibility: visible; opacity: 1; }
+#overlay .panel { background: #fff; padding: 18px; border-radius: 8px; text-align:center; min-width:260px; }
+#overlay .panel h2 { margin: 0 0 8px 0; }
+#overlay .panel .actions { margin-top:12px; display:flex; gap:8px; justify-content:center; }
