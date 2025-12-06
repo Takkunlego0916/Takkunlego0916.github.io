@@ -1,26 +1,17 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>電卓アプリ</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2048</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="calculator">
-    <div id="display" class="display">0</div>
-    <div class="keys">
-      <button data-action="clear">C</button>
-      <button data-action="back">←</button>
-      <button data-action="percent">%</button>
-      <button data-action="operator">/</button>
-
-      <button>7</button><button>8</button><button>9</button><button data-action="operator">*</button>
-      <button>4</button><button>5</button><button>6</button><button data-action="operator">-</button>
-      <button>1</button><button>2</button><button>3</button><button data-action="operator">+</button>
-      <button>0</button><button>.</button><button data-action="equals" class="equals">=</button>
-    </div>
-  </div>
-  <script src="script.js"></script>
+<div id="game">
+  <header><h1>2048</h1><div id="score">0</div></header>
+  <div id="board" class="board"></div>
+  <p class="hint">矢印キーまたはスワイプで操作</p>
+</div>
+<script src="app.js"></script>
 </body>
 </html>
