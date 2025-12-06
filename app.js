@@ -38,6 +38,34 @@ function startGame(){
   render();
 }
 
+window.addEventListener('keydown', e => {
+  if(e.key === 'ArrowLeft') move('left');
+  if(e.key === 'ArrowRight') move('right');
+  if(e.key === 'ArrowUp') move('up');
+  if(e.key === 'ArrowDown') move('down');
+});
+
+let startX = 0, startY = 0;
+boardEl.addEventListener('touchstart', e => {
+  const t = e.touches[0];
+  startX = t.clientX;
+  startY = t.clientY;
+}, { passive: true });
+
+boardEl.addEventListener('touchend', e => {
+  const t = e.changedTouches[0];
+  const dx = t.clientX - startX;
+  const dy = t.clientY - startY;
+  if(Math.abs(dx) > Math.abs(dy)){
+    if(dx > 30) move('right');
+    else if(dx < -30) move('left');
+  } else {
+    if(dy > 30) move('down');
+    else if(dy < -30) move('up');
+  }
+}, { passive: true });
+
+
 newBtn.addEventListener('click',startGame);
 
 startGame();
