@@ -1,0 +1,6 @@
+:root{--cell:24px}
+body{display:flex;gap:12px;background:#111;color:#fff;font-family:Arial;padding:20px}
+#board{background:#000;border:4px solid #333}
+#side{display:flex;flex-direction:column;gap:10px}
+button{padding:8px;margin:4px;border-radius:6px;border:none;cursor:pointer}
+#controls button{background:#1976d2;color:#fff}
