@@ -104,3 +104,11 @@ body{
   position: absolute;
   transition: transform .18s cubic-bezier(.2,.8,.2,1);
 }
+
+/* 背景セル */
+#grid-bg { pointer-events: none; }
+.cell-bg { background: var(--cell); border-radius:4px; height:100%; }
+
+/* タイル層は pointer-events:none を使わず、board のイベントを奪わないようにする */
+#tiles-layer { pointer-events: none; }
+.tile { pointer-events: auto; } /* もしタイルでイベントを受けたいなら切り替え可能 */
