@@ -1,4 +1,7 @@
-body{font-family:system-ui,Arial;background:#faf8ef;color:#776e65;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
-#game{width:320px}
-.board{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;background:#bbada0;padding:10px;border-radius:6px}
-.board > div{height:70px;background:#cdc1b4;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:bold}
+:root{--bg:#faf8ef;--tile:#cdc1b4;--board:#bbada0}
+*{box-sizing:border-box}body{font-family:system-ui,Arial;background:var(--bg);display:flex;align-items:center;justify-content:center;height:100vh;margin:0;color:#776e65}
+#game{width:340px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.board{background:var(--board);padding:10px;border-radius:6px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.cell{height:70px;background:var(--tile);border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px}
+.tile{transition:transform .12s,background .12s;color:#f9f6f2;padding:6px;border-radius:4px}
