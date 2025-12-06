@@ -1,7 +1,4 @@
-:root{font-family:system-ui,Segoe UI,Roboto,"Hiragino Kaku Gothic ProN",sans-serif}
-body{display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#f3f4f6}
-.calculator{width:320px;background:#222;color:#fff;border-radius:12px;padding:16px;box-shadow:0 6px 18px rgba(0,0,0,.2)}
-.display{background:#111;padding:16px;border-radius:8px;font-size:2rem;text-align:right;overflow:hidden}
-.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
-button{padding:16px;font-size:1.1rem;border:none;border-radius:8px;background:#333;color:#fff;cursor:pointer}
-button.equals{grid-column:4/span1;background:#ff9500}
+body{font-family:system-ui,Arial;background:#faf8ef;color:#776e65;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
+#game{width:320px}
+.board{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;background:#bbada0;padding:10px;border-radius:6px}
+.board > div{height:70px;background:#cdc1b4;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:bold}
