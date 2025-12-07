@@ -20,26 +20,35 @@ canvas {
 #controls {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 15px;
   margin-right: 20px;
 }
 
 #controls button {
-  font-size: 20px;
-  padding: 10px;
+  font-size: 28px;       /* ボタンを大きく */
+  padding: 20px;         /* 押しやすく */
   background: #333;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
+  width: 80px;
 }
 
 #sidebar {
   margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#next-label {
+  margin-bottom: 5px;
+  font-size: 16px;
 }
 
 #score {
-  font-size: 20px;
-  margin-bottom: 10px;
+  font-size: 22px;
+  margin-top: 15px;
 }
 
 #instructions {
