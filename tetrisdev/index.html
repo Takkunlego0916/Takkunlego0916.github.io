@@ -7,19 +7,38 @@
 </head>
 <body>
   <h1>Tetris</h1>
-  <div id="ui">
-    <div id="score">Score: 0</div>
-    <div id="instructions">
-      <p>操作方法:</p>
-      <ul>
-        <li>← → : 左右移動</li>
-        <li>↓ : 落下</li>
-        <li>Q : 左回転</li>
-        <li>W : 右回転</li>
-      </ul>
+  <div id="game-container">
+    <!-- 左側: タッチ操作ボタン -->
+    <div id="controls">
+      <button onclick="playerMove(-1)">←</button>
+      <button onclick="playerMove(1)">→</button>
+      <button onclick="playerDrop()">↓</button>
+      <button onclick="playerRotate(-1)">⟲</button>
+      <button onclick="playerRotate(1)">⟳</button>
+    </div>
+
+    <!-- 中央: ゲームキャンバス -->
+    <canvas id="tetris" width="240" height="400"></canvas>
+
+    <!-- 右側: スコアと次のブロック -->
+    <div id="sidebar">
+      <div id="score">Score: 0</div>
+      <canvas id="next" width="80" height="80"></canvas>
     </div>
   </div>
-  <canvas id="tetris" width="240" height="400"></canvas>
+
+  <!-- 操作説明は一番下 -->
+  <div id="instructions">
+    <p>操作方法:</p>
+    <ul>
+      <li>← → : 左右移動</li>
+      <li>↓ : 落下</li>
+      <li>Q : 左回転</li>
+      <li>W : 右回転</li>
+      <li>左側のボタンでも操作可能</li>
+    </ul>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
