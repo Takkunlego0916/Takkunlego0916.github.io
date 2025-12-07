@@ -191,3 +191,60 @@ const player = { pos: {x:0, y:0}, matrix: null };
 playerReset();
 update();
 updateScore();
+
+const canvas = document.getElementById('tetris');
+const context = canvas.getContext('2d');
+context.scale(20, 20);
+
+const nextCanvas = document.getElementById('next');
+const nextContext = nextCanvas.getContext('2d');
+nextContext.scale(20, 20);
+
+let score = 0;
+let nextPiece = null;
+
+function updateScore() {
+  document.getElementById('score').innerText = 'Score: ' + score;
+}
+
+function drawNext() {
+  nextContext.fillStyle = '#000';
+  nextContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
+  if (nextPiece) {
+    drawMatrix(nextPiece, {x:1, y:1}, nextContext);
+  }
+}
+
+function playerReset() {
+  const pieces = 'TJLOSZI';
+  if (!nextPiece) {
+    nextPiece = createPiece(pieces[pieces.length * Math.random() | 0]);
+  }
+  player.matrix = nextPiece;
+  player.pos.y = 0;
+  player.pos.x = (arena[0].length / 2 | 0) -
+                 (player.matrix[0].length / 2 | 0);
+
+  nextPiece = createPiece(pieces[pieces.length * Math.random() | 0]);
+  drawNext();
+
+  if (collide(arena, player)) {
+    arena.forEach(row => row.fill(0));
+    score = 0;
+    updateScore();
+  }
+}
+
+// drawMatrixを拡張してcontextを指定可能に
+function drawMatrix(matrix, offset, ctx = context) {
+  matrix.forEach((row, y) => {
+    row.forEach((value, x) => {
+      if (value !== 0) {
+        ctx.fillStyle = colors[value];
+        ctx.fillRect(x + offset.x,
+                     y + offset.y,
+                     1, 1);
+      }
+    });
+  });
+}
