@@ -1,0 +1,53 @@
+<!-- index.html -->
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>オセロ | GitHub Pages</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <header class="header">
+    <h1>オセロ（リバーシ）</h1>
+    <div class="controls">
+      <label>
+        人間の色
+        <select id="humanColor">
+          <option value="B">黒（先手）</option>
+          <option value="W">白（後手）</option>
+        </select>
+      </label>
+      <label>
+        難易度
+        <select id="difficulty">
+          <option value="1">初級</option>
+          <option value="3" selected>中級</option>
+          <option value="5">上級</option>
+        </select>
+      </label>
+      <button id="newGameBtn">新規ゲーム</button>
+      <button id="undoBtn">一手戻す</button>
+      <button id="hintBtn">ヒント</button>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="board-container">
+      <div id="board" class="board" aria-label="オセロ盤"></div>
+      <div class="legend">
+        <div class="score"><span>黒</span>：<strong id="scoreB">2</strong></div>
+        <div class="score"><span>白</span>：<strong id="scoreW">2</strong></div>
+        <div class="turn">手番：<strong id="turnLabel">黒</strong></div>
+        <div class="status" id="status"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>© 2025 Othello for GitHub Pages</small>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
