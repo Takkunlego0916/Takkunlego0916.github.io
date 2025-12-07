@@ -2,7 +2,12 @@ const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 context.scale(20, 20);
 
+const nextCanvas = document.getElementById('next');
+const nextContext = nextCanvas.getContext('2d');
+nextContext.scale(20, 20);
+
 let score = 0;
+let nextPiece = null;
 
 function updateScore() {
   document.getElementById('score').innerText = 'Score: ' + score;
@@ -14,15 +19,14 @@ function arenaSweep() {
     if (arena[y].every(value => value !== 0)) {
       arena.splice(y, 1);
       arena.unshift(new Array(arena[0].length).fill(0));
-      score += rowCount * 10;   // 行消去ごとにスコア加算
-      rowCount *= 2;            // 連続消去でボーナス
+      score += rowCount * 10;
+      rowCount *= 2;
       updateScore();
       y++;
     }
   }
 }
 
-// --- 以下は前回のロジックと同じ ---
 function collide(arena, player) {
   const m = player.matrix;
   const o = player.pos;
@@ -64,14 +68,14 @@ function createPiece(type) {
   }
 }
 
-function drawMatrix(matrix, offset) {
+function drawMatrix(matrix, offset, ctx = context) {
   matrix.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
-        context.fillStyle = colors[value];
-        context.fillRect(x + offset.x,
-                         y + offset.y,
-                         1, 1);
+        ctx.fillStyle = colors[value];
+        ctx.fillRect(x + offset.x,
+                     y + offset.y,
+                     1, 1);
       }
     });
   });
@@ -82,6 +86,14 @@ function draw() {
   context.fillRect(0, 0, canvas.width, canvas.height);
   drawMatrix(arena, {x:0, y:0});
   drawMatrix(player.matrix, player.pos);
+}
+
+function drawNext() {
+  nextContext.fillStyle = '#000';
+  nextContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
+  if (nextPiece) {
+    drawMatrix(nextPiece, {x:1, y:1}, nextContext);
+  }
 }
 
 function merge(arena, player) {
@@ -114,13 +126,20 @@ function playerMove(dir) {
 
 function playerReset() {
   const pieces = 'TJLOSZI';
-  player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
+  if (!nextPiece) {
+    nextPiece = createPiece(pieces[pieces.length * Math.random() | 0]);
+  }
+  player.matrix = nextPiece;
   player.pos.y = 0;
   player.pos.x = (arena[0].length / 2 | 0) -
                  (player.matrix[0].length / 2 | 0);
+
+  nextPiece = createPiece(pieces[pieces.length * Math.random() | 0]);
+  drawNext();
+
   if (collide(arena, player)) {
     arena.forEach(row => row.fill(0));
-    score = 0; // ゲームオーバーでスコアリセット
+    score = 0;
     updateScore();
   }
 }
@@ -191,60 +210,3 @@ const player = { pos: {x:0, y:0}, matrix: null };
 playerReset();
 update();
 updateScore();
-
-const canvas = document.getElementById('tetris');
-const context = canvas.getContext('2d');
-context.scale(20, 20);
-
-const nextCanvas = document.getElementById('next');
-const nextContext = nextCanvas.getContext('2d');
-nextContext.scale(20, 20);
-
-let score = 0;
-let nextPiece = null;
-
-function updateScore() {
-  document.getElementById('score').innerText = 'Score: ' + score;
-}
-
-function drawNext() {
-  nextContext.fillStyle = '#000';
-  nextContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
-  if (nextPiece) {
-    drawMatrix(nextPiece, {x:1, y:1}, nextContext);
-  }
-}
-
-function playerReset() {
-  const pieces = 'TJLOSZI';
-  if (!nextPiece) {
-    nextPiece = createPiece(pieces[pieces.length * Math.random() | 0]);
-  }
-  player.matrix = nextPiece;
-  player.pos.y = 0;
-  player.pos.x = (arena[0].length / 2 | 0) -
-                 (player.matrix[0].length / 2 | 0);
-
-  nextPiece = createPiece(pieces[pieces.length * Math.random() | 0]);
-  drawNext();
-
-  if (collide(arena, player)) {
-    arena.forEach(row => row.fill(0));
-    score = 0;
-    updateScore();
-  }
-}
-
-// drawMatrixを拡張してcontextを指定可能に
-function drawMatrix(matrix, offset, ctx = context) {
-  matrix.forEach((row, y) => {
-    row.forEach((value, x) => {
-      if (value !== 0) {
-        ctx.fillStyle = colors[value];
-        ctx.fillRect(x + offset.x,
-                     y + offset.y,
-                     1, 1);
-      }
-    });
-  });
-}
