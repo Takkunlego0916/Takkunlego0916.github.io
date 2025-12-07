@@ -184,17 +184,16 @@ function update(time = 0) {
   requestAnimationFrame(update);
 }
 
+// --- キーボード操作修正版 ---
 document.addEventListener('keydown', event => {
-  if (event.keyCode === 37) {
+  if (event.keyCode === 37) {        // ←
     playerMove(-1);
-  } else if (event.keyCode === 39) {
+  } else if (event.keyCode === 39) { // →
     playerMove(1);
-  } else if (event.keyCode === 40) {
+  } else if (event.keyCode === 32) { // Space
     playerDrop();
-  } else if (event.keyCode === 81) {
-    playerRotate(-1);
-  } else if (event.keyCode === 87) {
-    playerRotate(1);
+  } else if (event.keyCode === 87) { // W
+    playerRotate(1); // 右回りに統一
   }
 });
 
