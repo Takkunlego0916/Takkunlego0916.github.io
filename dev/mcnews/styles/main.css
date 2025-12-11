@@ -1,0 +1,178 @@
+:root {
+  --bg: #ffffff;
+  --text: #1a1f2b;
+  --muted: #5b657a;
+  --card: #f7f9fc;
+  --border: #e3e8f2;
+  --brand: #2b78ff;
+  --brand-ink: #1a4bb7;
+  --accent: #00b3a4;
+  --focus: #ffcc00;
+  --shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1320;
+    --text: #e7ecf8;
+    --muted: #a8b0c5;
+    --card: #161b2c;
+    --border: #252c42;
+    --brand: #5aa2ff;
+    --brand-ink: #cfe0ff;
+    --accent: #1fd6c4;
+    --focus: #ffd466;
+    --shadow: 0 10px 24px rgba(0,0,0,0.35);
+  }
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.site-header {
+  position: sticky; top: 0; z-index: 10;
+  backdrop-filter: saturate(1.2) blur(8px);
+  background: color-mix(in oklab, var(--bg) 90%, transparent);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px;
+}
+
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand-text { font-weight: 700; letter-spacing: 0.2px; color: var(--text); }
+
+.site-nav { display: flex; gap: 8px; margin-left: auto; }
+.nav-link {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 8px 12px; border-radius: 8px;
+}
+.nav-link:hover, .nav-link:focus { color: var(--brand-ink); background: var(--card); }
+.nav-link.is-active { color: var(--brand); font-weight: 600; }
+
+.container { max-width: 980px; margin: 0 auto; padding: 24px 16px; }
+.page-title { font-size: 1.8rem; margin: 8px 0 4px; }
+.page-desc { color: var(--muted); margin: 0 0 16px; }
+
+.section-title { font-size: 1.3rem; margin: 16px 0; }
+
+.news-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+@media (min-width: 780px) {
+  .news-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.news-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 14px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "date title"
+    "date desc"
+    "date actions";
+  column-gap: 12px;
+  row-gap: 6px;
+}
+
+.news-date {
+  grid-area: date;
+  align-self: start;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  min-width: 88px;
+}
+
+.news-title {
+  grid-area: title;
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+.news-title a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+.news-title a:hover, .news-title a:focus {
+  color: var(--brand);
+  border-bottom-color: color-mix(in oklab, var(--brand) 55%, transparent);
+}
+
+.news-desc {
+  grid-area: desc;
+  margin: 2px 0 8px;
+  color: var(--muted);
+}
+
+.news-actions {
+  grid-area: actions;
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: #fff0;
+  color: var(--brand-ink);
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+}
+.btn:hover, .btn:focus {
+  border-color: var(--brand);
+  color: var(--brand);
+  outline: none;
+}
+
+.empty-state {
+  margin-top: 10px;
+  padding: 16px;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  color: var(--muted);
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  margin-top: 24px;
+  padding: 16px;
+  display: flex; gap: 12px; align-items: center; justify-content: space-between;
+  color: var(--muted);
+}
+
+.theme-toggle {
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted);
+  padding: 6px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.theme-toggle:hover, .theme-toggle:focus {
+  color: var(--brand);
+  border-color: var(--brand);
+}
+
+/* キーボードフォーカス */
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
