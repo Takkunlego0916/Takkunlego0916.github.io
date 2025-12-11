@@ -146,3 +146,64 @@ html,body{
 
 /* Small utility */
 .small-note{ font-size:12px; color:var(--muted); margin-top:6px; }
+
+/* Header menu styles */
+.menu-btn{
+  background:linear-gradient(180deg,#ffffff,#f3f6ff);
+  border:1px solid rgba(34,34,34,0.06);
+  padding:8px 12px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.menu-btn:focus{
+  outline:2px solid rgba(30,144,255,0.18);
+  outline-offset:2px;
+}
+.menu-btn:hover{ transform:translateY(-2px); box-shadow:var(--shadow); }
+
+/* ドロップダウンパネル */
+.menu-panel{
+  position: absolute;
+  top:72px; /* ヘッダー高さに合わせて調整 */
+  right:28px;
+  background:var(--card-bg);
+  border-radius:10px;
+  box-shadow:var(--shadow);
+  padding:8px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  min-width:180px;
+  z-index:60;
+  transition:opacity .12s ease, transform .12s ease;
+  opacity:0;
+  transform:translateY(-6px) scale(0.98);
+  pointer-events:none;
+}
+.menu-panel[aria-hidden="false"]{
+  opacity:1;
+  transform:translateY(0) scale(1);
+  pointer-events:auto;
+}
+
+/* メニュー項目 */
+.menu-item{
+  display:block;
+  padding:10px 12px;
+  border-radius:8px;
+  color:var(--text);
+  text-decoration:none;
+  font-weight:600;
+}
+.menu-item:hover,
+.menu-item:focus{
+  background:linear-gradient(90deg, rgba(30,144,255,0.06), rgba(111,179,255,0.04));
+  outline:none;
+}
+
+/* モバイル調整 */
+@media (max-width:600px){
+  .menu-panel{ right:14px; top:64px; min-width:150px; }
+}
