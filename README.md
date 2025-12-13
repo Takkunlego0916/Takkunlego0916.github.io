@@ -6,7 +6,7 @@ GitHub Pages 上で遊べる ブラウザゲーム集 です。
 # 公開ページ
 
 ゲームホームページ（ポータル）
-[プレイ](https://takkunmc.sytes.net/)
+[プレイ](https://takkunlego0916.f5.si/)
 
 ここからすべてのゲームにアクセスできます。
 
@@ -16,7 +16,7 @@ GitHub Pages 上で遊べる ブラウザゲーム集 です。
 同じ数字のタイルを合体させて 2048 を作る定番パズル。
 矢印キー or スワイプで操作。
 
-[プレイ](https://takkunmc.sytes.net/2048/)
+[プレイ](https://takkunlego0916.f5.si/2048/)
 
 主な特徴
 	•	スマホ & PC 対応
@@ -28,7 +28,7 @@ GitHub Pages 上で遊べる ブラウザゲーム集 です。
 
 落ちてくるテトロミノを回転・移動させてラインを消すパズルゲーム。
 
-[プレイ](https://takkunmc.sytes.net/tetris/)
+[プレイ](https://takkunlego0916.f5.si/tetris/)
 
 主な特徴
 	•	スムーズな落下アニメーション
@@ -40,7 +40,7 @@ GitHub Pages 上で遊べる ブラウザゲーム集 です。
 黒と白の石を交互に打ち、挟んだ石をひっくり返すボードゲーム。
 （シンプルな AI や PvP モードあり ※仕様に合わせて調整）
 
-[プレイ](https://takkunmc.sytes.net/Othello/)
+[プレイ](https://takkunlego0916.f5.si/Othello/)
 特徴
 	•	操作しやすい 8×8 盤面
 	•	合法手のハイライト
