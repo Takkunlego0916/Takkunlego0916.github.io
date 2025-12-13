@@ -132,6 +132,8 @@ html,body{
 .card[data-game="2048"] .game-title{ color:#0f172a; }
 .card[data-game="tetris"] .game-title{ color:var(--accent); }
 .card[data-game="othello"] .game-title{ color:#0b6b3a; }
+.card[data-game="minesweeper"] .game-title{ color:#b91c1c; }
+
 
 /* Responsive */
 @media (max-width:900px){
