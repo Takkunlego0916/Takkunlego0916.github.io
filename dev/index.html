@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Takkun's WebSite</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header" role="banner">
+    <div class="logo">
+      <div class="mark">G</div>
+      <div class="title">Takkun's WebSite</div>
+    </div>
+
+    <!-- ヘッダーアクション（メニュー・サインアップ・ログイン / ユーザー表示） -->
+    <div class="header-actions" style="display:flex;align-items:center;gap:10px;">
+      <button class="menu-btn" id="siteMenuBtn" aria-haspopup="true" aria-expanded="false" aria-controls="siteMenu">メニュー</button>
+
+      <!-- サインアップ / ログイン（スクリプトで表示切替） -->
+      <div id="authControls" style="display:flex;align-items:center;gap:8px;">
+        <button class="login-btn" id="signupBtn" aria-label="サインアップ">サインアップ</button>
+        <button class="login-btn" id="loginBtn" aria-label="ログイン">ログイン</button>
+      </div>
+
+      <!-- ログイン済み表示（非表示が初期） -->
+      <div id="userControls" style="display:none;align-items:center;gap:8px;">
+        <div id="userName" style="font-weight:700;"></div>
+        <button class="login-btn" id="logoutBtn" aria-label="ログアウト">ログアウト</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- メニューパネル（初期は非表示） -->
+  <nav id="siteMenu" class="menu-panel" role="menu" aria-hidden="true">
+    <a class="menu-item" role="menuitem" href="https://contact.takkunlego0916.f5.si/" target="_blank" rel="noopener">プロフィール</a>
+    <a class="menu-item" role="menuitem" href="https://utility.takkunlego0916.f5.si/" target="_blank" rel="noopener">Utilitys</a>
+    <a class="menu-item" role="menuitem" href="https://typing.takkunlego0916.f5.si/" target="_blank" rel="noopener">Typing</a>
+    <a class="menu-item" role="menuitem" href="https://raid.takkunlego0916.f5.si/" target="_blank" rel="noopener">DiscordTool</a>
+  </nav>
+
+  <main class="container" role="main">
+    <h1 class="hero-title">遊べるゲームを選んでください</h1>
+    <p class="hero-sub">シンプルで遊びやすいゲームを集めたポータルサイト</p>
+
+    <section class="cards" aria-label="ゲーム一覧">
+      <article class="card" data-game="2048" data-url="https://takkunlego0916.f5.si/2048/" role="button" tabindex="0">
+        <div class="game-title">2048</div>
+        <div class="game-desc">遊ぶ · ランキング · ルール</div>
+      </article>
+
+      <article class="card" data-game="tetris" data-url="https://takkunlego0916.f5.si/tetris/" role="button" tabindex="0">
+        <div class="game-title">テトリス</div>
+        <div class="game-desc">遊ぶ · ランキング · ルール</div>
+      </article>
+
+      <article class="card" data-game="othello" data-url="https://takkunlego0916.f5.si/Othello/" role="button" tabindex="0">
+        <div class="game-title">オセロ</div>
+        <div class="game-desc">遊ぶ · ランキング · ルール</div>
+      </article>
+    </section>
+
+    <p class="small-note">※ カードをクリックすると各ゲームページへ移動します</p>
+  </main>
+
+  <!-- サインアップ / ログイン モーダル -->
+  <div id="authOverlay" class="auth-overlay" aria-hidden="true">
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <button class="auth-close" id="authClose" aria-label="閉じる">✕</button>
+
+      <!-- タブ切替 -->
+      <div class="auth-tabs">
+        <button id="tabLogin" class="auth-tab active">ログイン</button>
+        <button id="tabSignup" class="auth-tab">サインアップ</button>
+      </div>
+
+      <!-- ログインフォーム -->
+      <form id="loginForm" class="auth-form" novalidate>
+        <h2 id="authTitle">ログイン</h2>
+        <label>
+          メール
+          <input type="email" id="loginEmail" required />
+        </label>
+        <label>
+          パスワード
+          <input type="password" id="loginPassword" required minlength="6" />
+        </label>
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;">
+          <button type="submit" class="menu-btn">ログイン</button>
+          <button type="button" id="toSignup" class="menu-btn">サインアップへ</button>
+        </div>
+        <p class="small-note" id="loginMsg"></p>
+      </form>
+
+      <!-- サインアップフォーム -->
+      <form id="signupForm" class="auth-form" style="display:none;" novalidate>
+        <h2>サインアップ</h2>
+        <label>
+          ユーザー名
+          <input type="text" id="signupName" required />
+        </label>
+        <label>
+          メール
+          <input type="email" id="signupEmail" required />
+        </label>
+        <label>
+          パスワード
+          <input type="password" id="signupPassword" required minlength="6" />
+        </label>
+        <label>
+          パスワード（確認）
+          <input type="password" id="signupPasswordConfirm" required minlength="6" />
+        </label>
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;">
+          <button type="submit" class="menu-btn">サインアップ</button>
+          <button type="button" id="toLogin" class="menu-btn">ログインへ</button>
+        </div>
+        <p class="small-note" id="signupMsg"></p>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
