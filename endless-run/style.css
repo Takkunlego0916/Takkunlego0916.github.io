@@ -1,0 +1,4 @@
+body{margin:0;font-family:Arial;background:#87ceeb;display:flex;flex-direction:column;align-items:center}
+#ui{position:absolute;top:10px;left:10px}
+#game{border:4px solid #333;background:linear-gradient(#87ceeb,#b0e0e6)}
+#start{padding:8px 12px}
