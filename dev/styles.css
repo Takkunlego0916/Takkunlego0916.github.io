@@ -271,3 +271,11 @@ html,body{
   box-sizing:border-box;
 }
 .auth-form h2{ margin:0 0 8px 0; font-size:18px; text-align:center; }
+
+/* ヘッダーの小さなアイコン調整 */
+#userAvatar{ width:36px; height:36px; border-radius:8px; object-fit:cover; }
+
+/* プロフィールモーダルは既存の auth-overlay / auth-modal を流用 */
+#profileOverlay .auth-modal{ max-width:520px; padding:18px; }
+#profileOverlay input[type="file"]{ padding:6px 4px; }
+#profileAvatarPreview{ width:64px; height:64px; border-radius:10px; object-fit:cover; }
