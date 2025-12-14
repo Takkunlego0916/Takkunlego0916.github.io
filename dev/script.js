@@ -107,6 +107,21 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem(USERS_KEY, JSON.stringify(users));
   }
 
+  // --- テスト用アカウントをシードする関数 ---
+  function seedTestUser() {
+    const users = loadUsers();
+    const testEmail = 'test@example.com';
+    const testPassword = 'password123';
+    // 既に同じメールがあれば何もしない
+    if (!users.some(u => u.email === testEmail)) {
+      users.push({ name: 'テストユーザー', email: testEmail, password: testPassword });
+      saveUsers(users);
+      console.log('テストユーザーを作成しました:', testEmail);
+    } else {
+      console.log('テストユーザーは既に存在します:', testEmail);
+    }
+  }
+
   // 現在ユーザー
   function setCurrentUser(user) {
     localStorage.setItem(CURRENT_KEY, JSON.stringify(user));
@@ -256,7 +271,8 @@ document.addEventListener('DOMContentLoaded', () => {
     clearCurrentUser();
   });
 
-  // 初期表示
+  // --- 初期処理 ---
+  seedTestUser();   // ← ここでテストアカウントを作成（存在しなければ）
   renderAuthState();
 
   // モーダルの初期非表示スタイル
