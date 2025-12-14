@@ -133,6 +133,9 @@ html,body{
 .card[data-game="tetris"] .game-title{ color:var(--accent); }
 .card[data-game="othello"] .game-title{ color:#0b6b3a; }
 .card[data-game="minesweeper"] .game-title{ color:#b91c1c; }
+.card[data-game="sudoku"] .game-title { color:#7c3aed; }
+.card[data-game="endlessrunner"] .game-title { color:#f59e0b; }
+.card[data-game="breakout"] .game-title { color:#2563eb; }
 
 
 /* Responsive */
