@@ -1,0 +1,76 @@
+:root{
+  --cell-size: 48px;
+  --gap: 2px;
+  --accent: #2b7a78;
+  --bg: #f7f7f7;
+  --cell-bg: #ffffff;
+  --fixed-bg: #e9f6f6;
+  --error: #ffb3b3;
+}
+
+*{box-sizing:border-box}
+body{
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  margin:0;
+  padding:20px;
+  background:var(--bg);
+  color:#222;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-height:100vh;
+}
+
+header{width:100%;max-width:720px;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+h1{font-size:1.2rem;margin:0}
+.controls{display:flex;gap:8px;align-items:center}
+.controls select, .controls button{padding:6px 8px;font-size:0.95rem}
+
+.board{
+  display:grid;
+  grid-template-columns: repeat(9, var(--cell-size));
+  grid-template-rows: repeat(9, var(--cell-size));
+  gap: var(--gap);
+  background: #333;
+  padding:6px;
+  border-radius:8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.cell{
+  width:var(--cell-size);
+  height:var(--cell-size);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--cell-bg);
+  font-size:1.1rem;
+  border:1px solid rgba(0,0,0,0.06);
+  position:relative;
+}
+
+.cell input{
+  width:100%;
+  height:100%;
+  border:0;
+  text-align:center;
+  font-size:1.1rem;
+  background:transparent;
+  outline:none;
+}
+
+.cell.fixed{background:var(--fixed-bg);font-weight:600}
+.cell.error{background:var(--error)}
+
+.board .thick-right{border-right:3px solid #333}
+.board .thick-bottom{border-bottom:3px solid #333}
+.board .thick-left{border-left:3px solid #333}
+.board .thick-top{border-top:3px solid #333}
+
+.status{margin-top:12px;min-height:1.2em}
+
+footer{margin-top:18px;color:#666;font-size:0.85rem}
+@media (max-width:520px){
+  :root{--cell-size:36px}
+  header{flex-direction:column;align-items:flex-start;gap:8px}
+}
