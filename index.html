@@ -13,10 +13,24 @@
       <div class="title">Takkun's WebSite</div>
     </div>
 
-    <!-- メニューボタンを追加 -->
+    <!-- ヘッダーアクション（メニュー・サインアップ・ログイン / ユーザー表示） -->
     <div class="header-actions" style="display:flex;align-items:center;gap:10px;">
       <button class="menu-btn" id="siteMenuBtn" aria-haspopup="true" aria-expanded="false" aria-controls="siteMenu">メニュー</button>
-      <button class="login-btn" aria-label="ログイン">ログイン</button>
+
+      <!-- サインアップ / ログイン（スクリプトで表示切替） -->
+      <div id="authControls" style="display:flex;align-items:center;gap:8px;">
+        <button class="login-btn" id="signupBtn" aria-label="サインアップ">サインアップ</button>
+        <button class="login-btn" id="loginBtn" aria-label="ログイン">ログイン</button>
+      </div>
+
+      <!-- ログイン済み表示（非表示が初期） -->
+      <div id="userControls" style="display:none;align-items:center;gap:8px;">
+        <img id="userAvatar" src="" alt="ユーザーアイコン" style="width:36px;height:36px;border-radius:8px;object-fit:cover;display:none;border:1px solid rgba(34,34,34,0.06);" />
+        <div id="userName" style="font-weight:700;"></div>
+        <button class="menu-btn" id="editProfileBtn" aria-label="アカウント編集">アカウント</button>
+        <button class="menu-btn" id="themeBtn" aria-label="テーマ設定">テーマ</button>
+        <button class="login-btn" id="logoutBtn" aria-label="ログアウト">ログアウト</button>
+      </div>
     </div>
   </header>
 
@@ -26,7 +40,7 @@
     <a class="menu-item" role="menuitem" href="https://utility.takkunlego0916.f5.si/" target="_blank" rel="noopener">Utilitys</a>
     <a class="menu-item" role="menuitem" href="https://typing.takkunlego0916.f5.si/" target="_blank" rel="noopener">Typing</a>
     <a class="menu-item" role="menuitem" href="https://raid.takkunlego0916.f5.si/" target="_blank" rel="noopener">DiscordTool</a>
-    <a class="menu-item" role="menuitem" href="https://quiz.takkunlego0916.f5.si/" target="_blank" rel="noopener">Quiz</a>
+    <a class="menu-item" role="menuitsm" href="https://quiz.takkunlego0916.f5.si/" target="_blank" rel="noopener">クイズ</a>
   </nav>
 
   <main class="container" role="main">
@@ -50,13 +64,152 @@
       </article>
 
       <article class="card" data-game="minesweeper" data-url="https://takkunlego0916.f5.si/minesweeper/" role="button" tabindex="0">
-        <div class="game=title">マインスイーパー</div>
+        <div class="game-title">マインスイーパー</div>
         <div class="game-desc">遊ぶ · ランキング · ルール</div>
       </article>
     </section>
 
     <p class="small-note">※ カードをクリックすると各ゲームページへ移動します</p>
   </main>
+
+  <!-- サインアップ / ログイン モーダル -->
+  <div id="authOverlay" class="auth-overlay" aria-hidden="true">
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <button class="auth-close" id="authClose" aria-label="閉じる">✕</button>
+
+      <!-- タブ切替 -->
+      <div class="auth-tabs">
+        <button id="tabLogin" class="auth-tab active">ログイン</button>
+        <button id="tabSignup" class="auth-tab">サインアップ</button>
+      </div>
+
+      <!-- ログインフォーム -->
+      <form id="loginForm" class="auth-form" novalidate>
+        <h2 id="authTitle">ログイン</h2>
+        <label>
+          メール
+          <input type="email" id="loginEmail" required />
+        </label>
+        <label>
+          パスワード
+          <input type="password" id="loginPassword" required minlength="6" />
+        </label>
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;">
+          <button type="submit" class="menu-btn">ログイン</button>
+          <button type="button" id="toSignup" class="menu-btn">サインアップへ</button>
+        </div>
+        <p class="small-note" id="loginMsg"></p>
+      </form>
+
+      <!-- サインアップフォーム -->
+      <form id="signupForm" class="auth-form" style="display:none;" novalidate>
+        <h2>サインアップ</h2>
+        <label>
+          ユーザー名
+          <input type="text" id="signupName" required />
+        </label>
+        <label>
+          メール
+          <input type="email" id="signupEmail" required />
+        </label>
+        <label>
+          パスワード
+          <input type="password" id="signupPassword" required minlength="6" />
+        </label>
+        <label>
+          パスワード（確認）
+          <input type="password" id="signupPasswordConfirm" required minlength="6" />
+        </label>
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;">
+          <button type="submit" class="menu-btn">サインアップ</button>
+          <button type="button" id="toLogin" class="menu-btn">ログインへ</button>
+        </div>
+        <p class="small-note" id="signupMsg"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- プロフィール編集モーダル -->
+  <div id="profileOverlay" class="auth-overlay" aria-hidden="true" style="display:none;">
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="profileTitle">
+      <button class="auth-close" id="profileClose" aria-label="閉じる">✕</button>
+      <h2 id="profileTitle" style="text-align:center;margin-top:4px;">アカウント設定</h2>
+
+      <form id="profileForm" class="auth-form" novalidate>
+        <label>
+          アイコン
+          <input type="file" id="profileAvatarInput" accept="image/*" />
+        </label>
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
+          <img id="profileAvatarPreview" src="" alt="プレビュー" style="width:64px;height:64px;border-radius:10px;object-fit:cover;display:none;border:1px solid rgba(34,34,34,0.06);" />
+          <div style="font-size:13px;color:var(--muted);">画像を選択するとプレビューされます。既存のアイコンは上書きされます。</div>
+        </div>
+
+        <label>
+          ユーザー名
+          <input type="text" id="profileName" required />
+        </label>
+        <label>
+          メール
+          <input type="email" id="profileEmail" required />
+        </label>
+
+        <label>
+          新しいパスワード（空欄のままなら変更しない）
+          <input type="password" id="profilePassword" minlength="6" />
+        </label>
+        <label>
+          パスワード（確認）
+          <input type="password" id="profilePasswordConfirm" minlength="6" />
+        </label>
+
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;">
+          <button type="submit" class="menu-btn">保存</button>
+          <button type="button" id="profileCancel" class="menu-btn">キャンセル</button>
+        </div>
+        <p class="small-note" id="profileMsg"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- テーマ設定モーダル（ログイン中のみ使用可能） -->
+  <div id="themeOverlay" class="auth-overlay" aria-hidden="true" style="display:none;">
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="themeTitle">
+      <button class="auth-close" id="themeClose" aria-label="閉じる">✕</button>
+      <h2 id="themeTitle" style="text-align:center;margin-top:4px;">テーマ設定</h2>
+
+      <form id="themeForm" class="auth-form" novalidate>
+        <label>
+          モード
+          <div style="display:flex;gap:8px;margin-top:6px;">
+            <button type="button" id="modeLight" class="menu-btn active">ライト</button>
+            <button type="button" id="modeDark" class="menu-btn">ダーク</button>
+          </div>
+        </label>
+
+        <label>
+          背景グラデーション（開始色）
+          <input type="color" id="bgStartPicker" value="#f5f7fa" />
+        </label>
+        <label>
+          背景グラデーション（終了色）
+          <input type="color" id="bgEndPicker" value="#e8f0ff" />
+        </label>
+
+        <label>
+          アクセントカラー
+          <input type="color" id="accentPicker" value="#1e90ff" />
+        </label>
+
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;">
+          <button type="submit" class="menu-btn">保存</button>
+          <button type="button" id="themeReset" class="menu-btn">リセット</button>
+          <button type="button" id="themeCancel" class="menu-btn">キャンセル</button>
+        </div>
+        <p class="small-note" id="themeMsg"></p>
+      </form>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
