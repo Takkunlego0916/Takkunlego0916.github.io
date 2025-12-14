@@ -209,3 +209,110 @@ html,body{
 @media (max-width:600px){
   .menu-panel{ right:14px; top:64px; min-width:150px; }
 }
+
+/* --- 認証モーダルスタイル --- */
+.auth-overlay{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(8,12,20,0.45);
+  z-index:80;
+  padding:20px;
+}
+.auth-modal{
+  width:100%;
+  max-width:420px;
+  background:var(--card-bg);
+  border-radius:12px;
+  padding:18px;
+  box-shadow:var(--shadow-hover);
+  position:relative;
+}
+.auth-close{
+  position:absolute;
+  right:10px;
+  top:10px;
+  background:transparent;
+  border:none;
+  font-size:16px;
+  cursor:pointer;
+}
+.auth-tabs{
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  margin-bottom:12px;
+}
+.auth-tab{
+  padding:8px 12px;
+  border-radius:8px;
+  background:linear-gradient(180deg,#ffffff,#f3f6ff);
+  border:1px solid rgba(34,34,34,0.06);
+  cursor:pointer;
+  font-weight:700;
+}
+.auth-tab.active{
+  background:linear-gradient(90deg, rgba(30,144,255,0.12), rgba(111,179,255,0.08));
+  box-shadow:var(--shadow);
+}
+.auth-form label{
+  display:block;
+  margin:8px 0;
+  font-weight:600;
+}
+.auth-form input{
+  width:100%;
+  padding:10px 12px;
+  border-radius:8px;
+  border:1px solid rgba(34,34,34,0.08);
+  margin-top:6px;
+  box-sizing:border-box;
+}
+.auth-form h2{ margin:0 0 8px 0; font-size:18px; text-align:center; }
+
+/* ヘッダーの小さなアイコン調整 */
+#userAvatar{ width:36px; height:36px; border-radius:8px; object-fit:cover; }
+
+/* プロフィールモーダルは既存の auth-overlay / auth-modal を流用 */
+#profileOverlay .auth-modal{ max-width:520px; padding:18px; }
+#profileOverlay input[type="file"]{ padding:6px 4px; }
+#profileAvatarPreview{ width:64px; height:64px; border-radius:10px; object-fit:cover; }
+
+/* テーマ設定用のデフォルト変数 */
+:root{
+  --bg-start-default: #f5f7fa;
+  --bg-end-default: #e8f0ff;
+  --accent-default: #1e90ff;
+}
+
+/* ダークモード上書き */
+body.dark-mode{
+  --bg-start: #0b1220;
+  --bg-end: #0f1724;
+  --card-bg: #0b1220;
+  --text: #e6eef8;
+  --muted: #9aa6b2;
+}
+
+/* スムーズなテーマ切替 */
+html, body {
+  transition: background 300ms ease, color 300ms ease;
+}
+
+/* テーマモーダル調整 */
+#themeOverlay .auth-modal{ max-width:520px; padding:18px; }
+#themeOverlay input[type="color"]{ width:56px; height:36px; padding:4px; border-radius:6px; border:1px solid rgba(34,34,34,0.06); }
+
+/* ヘッダーの小さなアイコン調整 */
+#userAvatar{ width:36px; height:36px; border-radius:8px; object-fit:cover; }
+
+/* ルート変数の初期値を反映 */
+body {
+  background: linear-gradient(180deg, var(--bg-start, var(--bg-start-default)), var(--bg-end, var(--bg-end-default)));
+  color: var(--text, #222);
+}
+.menu-btn, .login-btn {
+  --accent-color: var(--accent, var(--accent-default));
+}
