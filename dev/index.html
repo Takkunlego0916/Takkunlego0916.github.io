@@ -25,7 +25,9 @@
 
       <!-- ログイン済み表示（非表示が初期） -->
       <div id="userControls" style="display:none;align-items:center;gap:8px;">
+        <img id="userAvatar" src="" alt="ユーザーアイコン" style="width:36px;height:36px;border-radius:8px;object-fit:cover;display:none;border:1px solid rgba(34,34,34,0.06);" />
         <div id="userName" style="font-weight:700;"></div>
+        <button class="menu-btn" id="editProfileBtn" aria-label="アカウント編集">アカウント</button>
         <button class="login-btn" id="logoutBtn" aria-label="ログアウト">ログアウト</button>
       </div>
     </div>
@@ -121,6 +123,49 @@
           <button type="button" id="toLogin" class="menu-btn">ログインへ</button>
         </div>
         <p class="small-note" id="signupMsg"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- プロフィール編集モーダル -->
+  <div id="profileOverlay" class="auth-overlay" aria-hidden="true" style="display:none;">
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="profileTitle">
+      <button class="auth-close" id="profileClose" aria-label="閉じる">✕</button>
+      <h2 id="profileTitle" style="text-align:center;margin-top:4px;">アカウント設定</h2>
+
+      <form id="profileForm" class="auth-form" novalidate>
+        <label>
+          アイコン
+          <input type="file" id="profileAvatarInput" accept="image/*" />
+        </label>
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
+          <img id="profileAvatarPreview" src="" alt="プレビュー" style="width:64px;height:64px;border-radius:10px;object-fit:cover;display:none;border:1px solid rgba(34,34,34,0.06);" />
+          <div style="font-size:13px;color:var(--muted);">画像を選択するとプレビューされます。既存のアイコンは上書きされます。</div>
+        </div>
+
+        <label>
+          ユーザー名
+          <input type="text" id="profileName" required />
+        </label>
+        <label>
+          メール
+          <input type="email" id="profileEmail" required />
+        </label>
+
+        <label>
+          新しいパスワード（空欄のままなら変更しない）
+          <input type="password" id="profilePassword" minlength="6" />
+        </label>
+        <label>
+          パスワード（確認）
+          <input type="password" id="profilePasswordConfirm" minlength="6" />
+        </label>
+
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;">
+          <button type="submit" class="menu-btn">保存</button>
+          <button type="button" id="profileCancel" class="menu-btn">キャンセル</button>
+        </div>
+        <p class="small-note" id="profileMsg"></p>
       </form>
     </div>
   </div>
