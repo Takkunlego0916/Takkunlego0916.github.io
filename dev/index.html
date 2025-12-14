@@ -28,6 +28,7 @@
         <img id="userAvatar" src="" alt="ユーザーアイコン" style="width:36px;height:36px;border-radius:8px;object-fit:cover;display:none;border:1px solid rgba(34,34,34,0.06);" />
         <div id="userName" style="font-weight:700;"></div>
         <button class="menu-btn" id="editProfileBtn" aria-label="アカウント編集">アカウント</button>
+        <button class="menu-btn" id="themeBtn" aria-label="テーマ設定">テーマ</button>
         <button class="login-btn" id="logoutBtn" aria-label="ログアウト">ログアウト</button>
       </div>
     </div>
@@ -166,6 +167,45 @@
           <button type="button" id="profileCancel" class="menu-btn">キャンセル</button>
         </div>
         <p class="small-note" id="profileMsg"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- テーマ設定モーダル（ログイン中のみ使用可能） -->
+  <div id="themeOverlay" class="auth-overlay" aria-hidden="true" style="display:none;">
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="themeTitle">
+      <button class="auth-close" id="themeClose" aria-label="閉じる">✕</button>
+      <h2 id="themeTitle" style="text-align:center;margin-top:4px;">テーマ設定</h2>
+
+      <form id="themeForm" class="auth-form" novalidate>
+        <label>
+          モード
+          <div style="display:flex;gap:8px;margin-top:6px;">
+            <button type="button" id="modeLight" class="menu-btn active">ライト</button>
+            <button type="button" id="modeDark" class="menu-btn">ダーク</button>
+          </div>
+        </label>
+
+        <label>
+          背景グラデーション（開始色）
+          <input type="color" id="bgStartPicker" value="#f5f7fa" />
+        </label>
+        <label>
+          背景グラデーション（終了色）
+          <input type="color" id="bgEndPicker" value="#e8f0ff" />
+        </label>
+
+        <label>
+          アクセントカラー
+          <input type="color" id="accentPicker" value="#1e90ff" />
+        </label>
+
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;">
+          <button type="submit" class="menu-btn">保存</button>
+          <button type="button" id="themeReset" class="menu-btn">リセット</button>
+          <button type="button" id="themeCancel" class="menu-btn">キャンセル</button>
+        </div>
+        <p class="small-note" id="themeMsg"></p>
       </form>
     </div>
   </div>
