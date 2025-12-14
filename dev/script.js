@@ -112,9 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const users = loadUsers();
     const testEmail = 'test@example.com';
     const testPassword = 'password123';
-    // 既に同じメールがあれば何もしない
     if (!users.some(u => u.email === testEmail)) {
-      users.push({ name: 'テストユーザー', email: testEmail, password: testPassword });
+      users.push({ name: 'テストユーザー', email: testEmail, password: testPassword, avatar: '' });
       saveUsers(users);
       console.log('テストユーザーを作成しました:', testEmail);
     } else {
@@ -135,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try { return JSON.parse(localStorage.getItem(CURRENT_KEY)); } catch { return null; }
   }
 
-  // 表示切替
+  // 表示切替（アイコン反映を含む）
   function renderAuthState() {
     const cur = getCurrentUser();
     if (cur && cur.name) {
@@ -147,6 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
       userControls.style.display = 'none';
       userNameEl.textContent = '';
     }
+    renderAvatar();
   }
 
   // モーダル開閉
@@ -155,7 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
     authOverlay.style.display = 'flex';
     if (initialTab === 'signup') showSignup();
     else showLogin();
-    // フォーカスを最初の入力へ
     setTimeout(() => {
       const first = authOverlay.querySelector('input');
       if (first) first.focus();
@@ -233,13 +232,12 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // 簡易保存（パスワードは平文で保存されます。実運用ではサーバー側でハッシュ化してください）
-    const newUser = { name, email, password: pw };
+    const newUser = { name, email, password: pw, avatar: '' };
     users.push(newUser);
     saveUsers(users);
     signupMsg.textContent = '登録しました。自動でログインします。';
     setTimeout(() => {
-      setCurrentUser({ name, email });
+      setCurrentUser({ name, email, avatar: '' });
       closeAuth();
     }, 800);
   });
@@ -261,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     loginMsg.textContent = 'ログインしました。';
     setTimeout(() => {
-      setCurrentUser({ name: found.name, email: found.email });
+      setCurrentUser({ name: found.name, email: found.email, avatar: found.avatar || '' });
       closeAuth();
     }, 600);
   });
@@ -271,10 +269,167 @@ document.addEventListener('DOMContentLoaded', () => {
     clearCurrentUser();
   });
 
+  // --- プロフィール編集機能の追加 ---
+  const editProfileBtn = document.getElementById('editProfileBtn');
+  const profileOverlay = document.getElementById('profileOverlay');
+  const profileClose = document.getElementById('profileClose');
+  const profileForm = document.getElementById('profileForm');
+  const profileCancel = document.getElementById('profileCancel');
+  const profileMsg = document.getElementById('profileMsg');
+  const profileAvatarInput = document.getElementById('profileAvatarInput');
+  const profileAvatarPreview = document.getElementById('profileAvatarPreview');
+  const profileName = document.getElementById('profileName');
+  const profileEmail = document.getElementById('profileEmail');
+  const profilePassword = document.getElementById('profilePassword');
+  const profilePasswordConfirm = document.getElementById('profilePasswordConfirm');
+  const userAvatarImg = document.getElementById('userAvatar');
+
+  function loadProfileToForm() {
+    const cur = getCurrentUser();
+    if (!cur) return;
+    profileName.value = cur.name || '';
+    profileEmail.value = cur.email || '';
+    profilePassword.value = '';
+    profilePasswordConfirm.value = '';
+    if (cur.avatar) {
+      profileAvatarPreview.src = cur.avatar;
+      profileAvatarPreview.style.display = '';
+    } else {
+      profileAvatarPreview.style.display = 'none';
+      profileAvatarPreview.src = '';
+    }
+    if (profileAvatarInput) profileAvatarInput.value = '';
+  }
+
+  function openProfile() {
+    profileOverlay.setAttribute('aria-hidden', 'false');
+    profileOverlay.style.display = 'flex';
+    loadProfileToForm();
+    setTimeout(() => {
+      const first = profileOverlay.querySelector('input[type="file"], input[type="text"], input[type="email"]');
+      if (first) first.focus();
+    }, 50);
+    document.addEventListener('keydown', profileOverlayKey);
+    document.addEventListener('click', profileOutsideClick);
+  }
+  function closeProfile() {
+    profileOverlay.setAttribute('aria-hidden', 'true');
+    profileOverlay.style.display = 'none';
+    profileMsg.textContent = '';
+    document.removeEventListener('keydown', profileOverlayKey);
+    document.removeEventListener('click', profileOutsideClick);
+  }
+  function profileOverlayKey(e) {
+    if (e.key === 'Escape') closeProfile();
+  }
+  function profileOutsideClick(e) {
+    const modal = profileOverlay.querySelector('.auth-modal');
+    if (modal && !modal.contains(e.target) && e.target !== editProfileBtn) {
+      closeProfile();
+    }
+  }
+
+  if (profileAvatarInput) {
+    profileAvatarInput.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) {
+        profileAvatarPreview.style.display = 'none';
+        profileAvatarPreview.src = '';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        profileAvatarPreview.src = reader.result;
+        profileAvatarPreview.style.display = '';
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  if (profileForm) {
+    profileForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      profileMsg.textContent = '';
+      const name = profileName.value.trim();
+      const email = profileEmail.value.trim().toLowerCase();
+      const pw = profilePassword.value;
+      const pwc = profilePasswordConfirm.value;
+
+      if (!name || !email) {
+        profileMsg.textContent = '名前とメールは必須です。';
+        return;
+      }
+      if (pw && pw.length < 6) {
+        profileMsg.textContent = 'パスワードは6文字以上にしてください。';
+        return;
+      }
+      if (pw && pw !== pwc) {
+        profileMsg.textContent = 'パスワードが一致しません。';
+        return;
+      }
+
+      const users = loadUsers();
+      const cur = getCurrentUser();
+      if (!cur) {
+        profileMsg.textContent = 'ログイン状態が見つかりません。';
+        return;
+      }
+
+      const other = users.find(u => u.email === email && u.email !== cur.email);
+      if (other) {
+        profileMsg.textContent = 'そのメールアドレスは他のアカウントで使用されています。';
+        return;
+      }
+
+      const idx = users.findIndex(u => u.email === cur.email);
+      if (idx === -1) {
+        profileMsg.textContent = 'ユーザー情報が見つかりません。';
+        return;
+      }
+
+      const file = profileAvatarInput.files && profileAvatarInput.files[0];
+      const finalizeSave = (avatarDataUrl) => {
+        if (avatarDataUrl !== undefined) users[idx].avatar = avatarDataUrl;
+        users[idx].name = name;
+        users[idx].email = email;
+        if (pw) users[idx].password = pw;
+        saveUsers(users);
+        setCurrentUser({ name, email, avatar: users[idx].avatar || '' });
+        profileMsg.textContent = '保存しました。';
+        renderAvatar();
+        setTimeout(() => closeProfile(), 700);
+      };
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => finalizeSave(reader.result);
+        reader.readAsDataURL(file);
+      } else {
+        finalizeSave(undefined);
+      }
+    });
+  }
+
+  if (profileClose) profileClose.addEventListener('click', closeProfile);
+  if (profileCancel) profileCancel.addEventListener('click', closeProfile);
+  if (editProfileBtn) editProfileBtn.addEventListener('click', openProfile);
+
+  function renderAvatar() {
+    const cur = getCurrentUser();
+    if (cur && cur.avatar) {
+      userAvatarImg.src = cur.avatar;
+      userAvatarImg.style.display = '';
+    } else {
+      userAvatarImg.style.display = 'none';
+      userAvatarImg.src = '';
+    }
+  }
+
   // --- 初期処理 ---
-  seedTestUser();   // ← ここでテストアカウントを作成（存在しなければ）
+  seedTestUser();
   renderAuthState();
 
   // モーダルの初期非表示スタイル
-  authOverlay.style.display = 'none';
+  if (authOverlay) authOverlay.style.display = 'none';
+  if (profileOverlay) profileOverlay.style.display = 'none';
 });
