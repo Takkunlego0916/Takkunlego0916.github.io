@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>数独ゲーム</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>数独（Sudoku）</h1>
+    <div class="controls">
+      <label for="difficulty">難易度</label>
+      <select id="difficulty">
+        <option value="easy">やさしい</option>
+        <option value="medium" selected>ふつう</option>
+        <option value="hard">むずかしい</option>
+      </select>
+      <button id="newBtn">新しいパズル</button>
+      <button id="solveBtn">解く</button>
+      <button id="checkBtn">チェック</button>
+      <button id="clearBtn">クリア</button>
+    </div>
+  </header>
+
+  <main>
+    <div id="board" class="board" aria-label="数独ボード"></div>
+    <div class="status" id="status"></div>
+  </main>
+
+  <footer>
+    <small>GitHub Pages 用のシンプルな数独ゲーム</small>
+  </footer>
+
+  <script src="js/sudoku.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
