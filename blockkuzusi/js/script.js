@@ -26,9 +26,69 @@ function initBricks(){
 }
 initBricks();
 
-document.addEventListener("keydown",e=>{ if(e.key==='Right' || e.key==='ArrowRight') rightPressed=true; if(e.key==='Left' || e.key==='ArrowLeft') leftPressed=true; });
-document.addEventListener("keyup",e=>{ if(e.key==='Right' || e.key==='ArrowRight') rightPressed=false; if(e.key==='Left' || e.key==='ArrowLeft') leftPressed=false; });
-canvas.addEventListener("mousemove",e=>{ const rect=canvas.getBoundingClientRect(); paddleX = e.clientX - rect.left - paddleWidth/2; });
+/* キーボード */
+document.addEventListener("keydown",e=>{
+  if(e.key==='Right' || e.key==='ArrowRight') rightPressed=true;
+  if(e.key==='Left' || e.key==='ArrowLeft') leftPressed=true;
+});
+document.addEventListener("keyup",e=>{
+  if(e.key==='Right' || e.key==='ArrowRight') rightPressed=false;
+  if(e.key==='Left' || e.key==='ArrowLeft') leftPressed=false;
+});
+
+/* マウス */
+canvas.addEventListener("mousemove",e=>{
+  const rect=canvas.getBoundingClientRect();
+  paddleX = e.clientX - rect.left - paddleWidth/2;
+});
+
+/* タッチ操作: 指でドラッグしてパドルを動かす */
+let ongoingTouchId = null;
+
+canvas.addEventListener("touchstart", e => {
+  // 最初のタッチだけを扱う（複数タッチは無視）
+  const touch = e.changedTouches[0];
+  ongoingTouchId = touch.identifier;
+  const rect = canvas.getBoundingClientRect();
+  // パドルの中心をタッチ位置に合わせる
+  paddleX = touch.clientX - rect.left - paddleWidth/2;
+  // タッチ開始時に既存のキー状態をクリア（誤動作防止）
+  rightPressed = leftPressed = false;
+  // ページスクロールを防ぐ
+  e.preventDefault();
+}, {passive:false});
+
+canvas.addEventListener("touchmove", e => {
+  // 対応するタッチを探す
+  for (let i = 0; i < e.changedTouches.length; i++) {
+    const touch = e.changedTouches[i];
+    if (touch.identifier === ongoingTouchId) {
+      const rect = canvas.getBoundingClientRect();
+      paddleX = touch.clientX - rect.left - paddleWidth/2;
+      // 画面外に出ないように制限
+      if (paddleX < 0) paddleX = 0;
+      if (paddleX > canvas.width - paddleWidth) paddleX = canvas.width - paddleWidth;
+      break;
+    }
+  }
+  e.preventDefault();
+}, {passive:false});
+
+canvas.addEventListener("touchend", e => {
+  // タッチ終了時に追跡を解除
+  for (let i = 0; i < e.changedTouches.length; i++) {
+    if (e.changedTouches[i].identifier === ongoingTouchId) {
+      ongoingTouchId = null;
+      break;
+    }
+  }
+  e.preventDefault();
+}, {passive:false});
+
+canvas.addEventListener("touchcancel", e => {
+  ongoingTouchId = null;
+  e.preventDefault();
+}, {passive:false});
 
 restartBtn.addEventListener('click',resetGame);
 
@@ -78,8 +138,13 @@ function draw(){
     else { alert('Game Over'); resetGame(); return; }
   }
 
+  // キーボード操作が有効な場合はそれを優先してパドルを動かす
   if(rightPressed && paddleX < canvas.width - paddleWidth) paddleX += 7;
   if(leftPressed && paddleX > 0) paddleX -= 7;
+
+  // 画面外に出ないように制限（タッチやマウスでの位置補正）
+  if (paddleX < 0) paddleX = 0;
+  if (paddleX > canvas.width - paddleWidth) paddleX = canvas.width - paddleWidth;
 
   x += dx; y += dy;
   requestAnimationFrame(draw);
