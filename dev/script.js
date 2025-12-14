@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const testEmail = 'test@example.com';
     const testPassword = 'password123';
     if (!users.some(u => u.email === testEmail)) {
-      users.push({ name: 'テストユーザー', email: testEmail, password: testPassword, avatar: '' });
+      users.push({ name: 'テストユーザー', email: testEmail, password: testPassword, avatar: '', theme: null });
       saveUsers(users);
       console.log('テストユーザーを作成しました:', testEmail);
     } else {
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try { return JSON.parse(localStorage.getItem(CURRENT_KEY)); } catch { return null; }
   }
 
-  // 表示切替（アイコン反映を含む）
+  // 表示切替（アイコン・テーマ反映を含む）
   function renderAuthState() {
     const cur = getCurrentUser();
     if (cur && cur.name) {
@@ -147,6 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
       userNameEl.textContent = '';
     }
     renderAvatar();
+    loadThemeForCurrentUser(); // ログイン状態に応じてテーマを読み込む
   }
 
   // モーダル開閉
@@ -232,12 +233,12 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const newUser = { name, email, password: pw, avatar: '' };
+    const newUser = { name, email, password: pw, avatar: '', theme: null };
     users.push(newUser);
     saveUsers(users);
     signupMsg.textContent = '登録しました。自動でログインします。';
     setTimeout(() => {
-      setCurrentUser({ name, email, avatar: '' });
+      setCurrentUser({ name, email, avatar: '', theme: null });
       closeAuth();
     }, 800);
   });
@@ -259,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     loginMsg.textContent = 'ログインしました。';
     setTimeout(() => {
-      setCurrentUser({ name: found.name, email: found.email, avatar: found.avatar || '' });
+      setCurrentUser({ name: found.name, email: found.email, avatar: found.avatar || '', theme: found.theme || null });
       closeAuth();
     }, 600);
   });
@@ -394,7 +395,7 @@ document.addEventListener('DOMContentLoaded', () => {
         users[idx].email = email;
         if (pw) users[idx].password = pw;
         saveUsers(users);
-        setCurrentUser({ name, email, avatar: users[idx].avatar || '' });
+        setCurrentUser({ name, email, avatar: users[idx].avatar || '', theme: users[idx].theme || null });
         profileMsg.textContent = '保存しました。';
         renderAvatar();
         setTimeout(() => closeProfile(), 700);
@@ -425,6 +426,142 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // --- テーマ設定機能（ログイン中のみ有効） ---
+  const themeBtn = document.getElementById('themeBtn');
+  const themeOverlay = document.getElementById('themeOverlay');
+  const themeClose = document.getElementById('themeClose');
+  const themeForm = document.getElementById('themeForm');
+  const modeLight = document.getElementById('modeLight');
+  const modeDark = document.getElementById('modeDark');
+  const bgStartPicker = document.getElementById('bgStartPicker');
+  const bgEndPicker = document.getElementById('bgEndPicker');
+  const accentPicker = document.getElementById('accentPicker');
+  const themeReset = document.getElementById('themeReset');
+  const themeCancel = document.getElementById('themeCancel');
+  const themeMsg = document.getElementById('themeMsg');
+
+  function applyThemeObject(themeObj) {
+    if (!themeObj) {
+      document.body.classList.remove('dark-mode');
+      document.documentElement.style.setProperty('--bg-start', getComputedStyle(document.documentElement).getPropertyValue('--bg-start-default').trim() || '#f5f7fa');
+      document.documentElement.style.setProperty('--bg-end', getComputedStyle(document.documentElement).getPropertyValue('--bg-end-default').trim() || '#e8f0ff');
+      document.documentElement.style.setProperty('--accent', getComputedStyle(document.documentElement).getPropertyValue('--accent-default').trim() || '#1e90ff');
+      return;
+    }
+    if (themeObj.mode === 'dark') document.body.classList.add('dark-mode'); else document.body.classList.remove('dark-mode');
+    if (themeObj.bgStart) document.documentElement.style.setProperty('--bg-start', themeObj.bgStart);
+    if (themeObj.bgEnd) document.documentElement.style.setProperty('--bg-end', themeObj.bgEnd);
+    if (themeObj.accent) document.documentElement.style.setProperty('--accent', themeObj.accent);
+  }
+
+  function saveThemeForCurrentUser(themeObj) {
+    const cur = getCurrentUser();
+    if (!cur) return;
+    const users = loadUsers();
+    const idx = users.findIndex(u => u.email === cur.email);
+    if (idx === -1) return;
+    users[idx].theme = themeObj;
+    saveUsers(users);
+    setCurrentUser({ name: cur.name, email: cur.email, avatar: cur.avatar || '', theme: themeObj });
+  }
+
+  function loadThemeForCurrentUser() {
+    const cur = getCurrentUser();
+    if (!cur) {
+      applyThemeObject(null);
+      return;
+    }
+    const users = loadUsers();
+    const found = users.find(u => u.email === cur.email);
+    const themeObj = found && found.theme ? found.theme : null;
+    applyThemeObject(themeObj);
+    if (themeObj) {
+      if (themeObj.mode === 'dark') {
+        modeDark.classList.add('active'); modeLight.classList.remove('active');
+      } else {
+        modeLight.classList.add('active'); modeDark.classList.remove('active');
+      }
+      if (themeObj.bgStart) bgStartPicker.value = themeObj.bgStart;
+      if (themeObj.bgEnd) bgEndPicker.value = themeObj.bgEnd;
+      if (themeObj.accent) accentPicker.value = themeObj.accent;
+    } else {
+      bgStartPicker.value = getComputedStyle(document.documentElement).getPropertyValue('--bg-start-default').trim() || '#f5f7fa';
+      bgEndPicker.value = getComputedStyle(document.documentElement).getPropertyValue('--bg-end-default').trim() || '#e8f0ff';
+      accentPicker.value = getComputedStyle(document.documentElement).getPropertyValue('--accent-default').trim() || '#1e90ff';
+      modeLight.classList.add('active'); modeDark.classList.remove('active');
+    }
+  }
+
+  function openTheme() {
+    const cur = getCurrentUser();
+    if (!cur) return;
+    themeOverlay.setAttribute('aria-hidden', 'false');
+    themeOverlay.style.display = 'flex';
+    loadThemeForCurrentUser();
+    setTimeout(() => {
+      const first = themeOverlay.querySelector('input, button');
+      if (first) first.focus();
+    }, 50);
+    document.addEventListener('keydown', themeOverlayKey);
+    document.addEventListener('click', themeOutsideClick);
+  }
+  function closeTheme() {
+    themeOverlay.setAttribute('aria-hidden', 'true');
+    themeOverlay.style.display = 'none';
+    themeMsg.textContent = '';
+    document.removeEventListener('keydown', themeOverlayKey);
+    document.removeEventListener('click', themeOutsideClick);
+  }
+  function themeOverlayKey(e) { if (e.key === 'Escape') closeTheme(); }
+  function themeOutsideClick(e) {
+    const modal = themeOverlay.querySelector('.auth-modal');
+    if (modal && !modal.contains(e.target) && e.target !== themeBtn) closeTheme();
+  }
+
+  if (themeBtn) themeBtn.addEventListener('click', openTheme);
+  if (themeClose) themeClose.addEventListener('click', closeTheme);
+  if (themeCancel) themeCancel.addEventListener('click', closeTheme);
+
+  if (modeLight) modeLight.addEventListener('click', () => {
+    modeLight.classList.add('active'); modeDark.classList.remove('active');
+  });
+  if (modeDark) modeDark.addEventListener('click', () => {
+    modeDark.classList.add('active'); modeLight.classList.remove('active');
+  });
+
+  if (themeForm) {
+    themeForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const mode = modeDark.classList.contains('active') ? 'dark' : 'light';
+      const bgStart = bgStartPicker.value;
+      const bgEnd = bgEndPicker.value;
+      const accent = accentPicker.value;
+      const themeObj = { mode, bgStart, bgEnd, accent };
+      saveThemeForCurrentUser(themeObj);
+      applyThemeObject(themeObj);
+      themeMsg.textContent = '保存しました。';
+      setTimeout(() => closeTheme(), 600);
+    });
+  }
+
+  if (themeReset) {
+    themeReset.addEventListener('click', () => {
+      const cur = getCurrentUser();
+      if (!cur) return;
+      const users = loadUsers();
+      const idx = users.findIndex(u => u.email === cur.email);
+      if (idx !== -1) {
+        delete users[idx].theme;
+        saveUsers(users);
+      }
+      const curObj = getCurrentUser();
+      setCurrentUser({ name: curObj.name, email: curObj.email, avatar: curObj.avatar || '', theme: null });
+      applyThemeObject(null);
+      themeMsg.textContent = 'リセットしました。';
+      setTimeout(() => closeTheme(), 600);
+    });
+  }
+
   // --- 初期処理 ---
   seedTestUser();
   renderAuthState();
@@ -432,4 +569,5 @@ document.addEventListener('DOMContentLoaded', () => {
   // モーダルの初期非表示スタイル
   if (authOverlay) authOverlay.style.display = 'none';
   if (profileOverlay) profileOverlay.style.display = 'none';
+  if (themeOverlay) themeOverlay.style.display = 'none';
 });
