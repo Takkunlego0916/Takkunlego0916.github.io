@@ -1,0 +1,6 @@
+*{box-sizing:border-box}
+body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;background:#111;color:#fff;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
+.container{width:520px;text-align:center}
+canvas{background:#000;border:4px solid #333;display:block;margin:12px auto}
+.info{display:flex;justify-content:space-between;align-items:center;padding:0 8px}
+button{padding:6px 12px;border-radius:6px;border:none;background:#28a; color:#fff;cursor:pointer}
