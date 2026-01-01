@@ -3,6 +3,10 @@
 GitHub Pages 上で遊べる ブラウザゲーム集 です。
 すべて HTML / CSS / JavaScript だけで作られており、インストール不要でどのデバイスからでも遊べます。
 
+# Full Tutorial up!!!
+
+https://www.youtube.com/watch?v=Ciwp5gViSTA
+
 # 公開ページ
 
 ゲームホームページ（ポータル）
