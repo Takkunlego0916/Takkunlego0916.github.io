@@ -1,5 +1,3 @@
-// app.js
-// UI とイベントハンドラ
 document.addEventListener('DOMContentLoaded', ()=>{
   const boardEl = document.getElementById('board');
   const statusEl = document.getElementById('status');
@@ -13,14 +11,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
   let solution = null;
   let fixed = Array.from({length:9},()=>Array(9).fill(false));
 
-  // ボードを作る
   function buildBoard(){
     boardEl.innerHTML = '';
     for(let r=0;r<9;r++){
       for(let c=0;c<9;c++){
         const cell = document.createElement('div');
         cell.className = 'cell';
-        // 太線の調整
         if(c%3===2) cell.classList.add('thick-right');
         if(r%3===2) cell.classList.add('thick-bottom');
         if(c%3===0) cell.classList.add('thick-left');
@@ -56,7 +52,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const c = +el.dataset.c;
     if(v === '') puzzle[r][c] = 0;
     else puzzle[r][c] = Number(v);
-    // 自動で次へ移動
     if(v !== ''){
       const next = getCell(r,c+1) || getCell(r+1,0);
       if(next) next.focus();
@@ -69,7 +64,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     return boardEl.children[idx].querySelector('input');
   }
 
-  // パズルを表示
   function render(puz, sol=null){
     puzzle = Sudoku.cloneGrid(puz);
     solution = sol ? Sudoku.cloneGrid(sol) : null;
@@ -91,17 +85,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
     statusEl.textContent = '';
   }
 
-  // 新しいパズル生成
   function newPuzzle(){
     const diff = difficultyEl.value;
     const res = Sudoku.makePuzzle(diff);
     render(res.puzzle, res.solution);
   }
 
-  // 解く（解答を表示）
   function solvePuzzle(){
     if(!solution){
-      // コピーして解く
       const copy = Sudoku.cloneGrid(puzzle);
       if(Sudoku.solve(copy)){
         render(copy, copy);
@@ -113,9 +104,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
   }
 
-  // チェック（矛盾を赤表示）
   function checkPuzzle(){
-    // まず全てのエラー表示をクリア
     for(let r=0;r<9;r++) for(let c=0;c<9;c++) getCell(r,c).parentElement.classList.remove('error');
 
     let ok = true;
@@ -123,7 +112,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
       for(let c=0;c<9;c++){
         const v = puzzle[r][c];
         if(v === 0) { ok = false; continue; }
-        // 一時的に消してチェック
         puzzle[r][c] = 0;
         if(!Sudoku.isSafe(puzzle, r, c, v)){
           getCell(r,c).parentElement.classList.add('error');
@@ -135,7 +123,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     statusEl.textContent = ok ? '今のところ矛盾はありません' : '矛盾があります（赤）';
   }
 
-  // クリア（固定以外を消す）
   function clearPuzzle(){
     for(let r=0;r<9;r++){
       for(let c=0;c<9;c++){
@@ -149,19 +136,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
     statusEl.textContent = '';
   }
 
-  // 初期化
   buildBoard();
   newPuzzle();
 
-  // イベント
   newBtn.addEventListener('click', newPuzzle);
   solveBtn.addEventListener('click', solvePuzzle);
   checkBtn.addEventListener('click', checkPuzzle);
   clearBtn.addEventListener('click', clearPuzzle);
 
-  // キーボードで数字入力後に自動チェック（任意）
   boardEl.addEventListener('input', ()=>{
-    // 自動で解答と比較して完全一致なら成功表示
     if(!solution) return;
     let complete = true;
     for(let r=0;r<9;r++){
