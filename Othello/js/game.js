@@ -1,4 +1,3 @@
-// js/game.js
 export const SIZE = 8;
 export const EMPTY = 0;
 export const BLACK = 1;
@@ -94,5 +93,5 @@ export function nextTurn(board, currentColor) {
   if (moves.length > 0) return opponent(currentColor);
   const myMoves = legalMoves(board, currentColor);
   if (myMoves.length > 0) return currentColor;
-  return null; // no moves for both
+  return null;
 }
