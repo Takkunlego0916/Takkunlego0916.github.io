@@ -3,27 +3,24 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Takkun's WebSite</title>
+  <title>Takkun's Game Portal</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="header" role="banner">
     <div class="logo">
       <div class="mark">G</div>
-      <div class="title">Takkun's WebSite</div>
+      <div class="title">Takkun's Game Portal</div>
     </div>
 
-    <!-- ヘッダーアクション（メニュー・サインアップ・ログイン / ユーザー表示） -->
     <div class="header-actions" style="display:flex;align-items:center;gap:10px;">
       <button class="menu-btn" id="siteMenuBtn" aria-haspopup="true" aria-expanded="false" aria-controls="siteMenu">メニュー</button>
 
-      <!-- サインアップ / ログイン（スクリプトで表示切替） -->
       <div id="authControls" style="display:flex;align-items:center;gap:8px;">
         <button class="login-btn" id="signupBtn" aria-label="サインアップ">サインアップ</button>
         <button class="login-btn" id="loginBtn" aria-label="ログイン">ログイン</button>
       </div>
 
-      <!-- ログイン済み表示（非表示が初期） -->
       <div id="userControls" style="display:none;align-items:center;gap:8px;">
         <img id="userAvatar" src="" alt="ユーザーアイコン" style="width:36px;height:36px;border-radius:8px;object-fit:cover;display:none;border:1px solid rgba(34,34,34,0.06);" />
         <div id="userName" style="font-weight:700;"></div>
@@ -34,7 +31,6 @@
     </div>
   </header>
 
-  <!-- メニューパネル（初期は非表示） -->
   <nav id="siteMenu" class="menu-panel" role="menu" aria-hidden="true">
     <a class="menu-item" role="menuitem" href="https://contact.takkunlego0916.f5.si/" target="_blank" rel="noopener">プロフィール</a>
     <a class="menu-item" role="menuitem" href="https://utility.takkunlego0916.f5.si/" target="_blank" rel="noopener">Utilitys</a>
@@ -48,37 +44,37 @@
     <p class="hero-sub">シンプルで遊びやすいゲームを集めたポータルサイト</p>
 
     <section class="cards" aria-label="ゲーム一覧">
-      <article class="card" data-game="2048" data-url="https://takkunlego0916.f5.si/2048/" role="button" tabindex="0">
+      <article class="card" data-game="2048" data-url="https://games.takkunlego0916.f5.si/2048/" role="button" tabindex="0">
         <div class="game-title">2048</div>
         <div class="game-desc">遊ぶ · ランキング · ルール</div>
       </article>
 
-      <article class="card" data-game="tetris" data-url="https://takkunlego0916.f5.si/tetris/" role="button" tabindex="0">
+      <article class="card" data-game="tetris" data-url="https://games.takkunlego0916.f5.si/tetris/" role="button" tabindex="0">
         <div class="game-title">テトリス</div>
         <div class="game-desc">遊ぶ · ランキング · ルール</div>
       </article>
 
-      <article class="card" data-game="othello" data-url="https://takkunlego0916.f5.si/Othello/" role="button" tabindex="0">
+      <article class="card" data-game="othello" data-url="https://games.takkunlego0916.f5.si/Othello/" role="button" tabindex="0">
         <div class="game-title">オセロ</div>
         <div class="game-desc">遊ぶ · ランキング · ルール</div>
       </article>
 
-      <article class="card" data-game="minesweeper" data-url="https://takkunlego0916.f5.si/minesweeper/" role="button" tabindex="0">
+      <article class="card" data-game="minesweeper" data-url="https://games.takkunlego0916.f5.si/minesweeper/" role="button" tabindex="0">
         <div class="game-title">マインスイーパー</div>
         <div class="game-desc">遊ぶ · ランキング · ルール</div>
       </article>
       
-      <article class="card" data-game="sudoku" data-url="https://takkunlego0916.f5.si/sudoku/" role="button" tabindex="0">
+      <article class="card" data-game="sudoku" data-url="https://games.takkunlego0916.f5.si/sudoku/" role="button" tabindex="0">
         <div class="game-title">数独</div>
         <div class="game-desc">遊ぶ · ランキング · ルール</div>
       </article>
 
-      <article class="card" data-game="endlessrunner" data-url="https://takkunlego0916.f5.si/endless-run/" role="button" tabindex="0">
+      <article class="card" data-game="endlessrunner" data-url="https://games.takkunlego0916.f5.si/endless-run/" role="button" tabindex="0">
         <div class="game-title">エンドレスラン</div>
         <div class="game-desc">遊ぶ · ランキング · ルール</div>
       </article>
 
-      <article class="card" data-game="breakout" data-url="https://takkunlego0916.f5.si/blockkuzusi/" role="button" tabindex="0">
+      <article class="card" data-game="breakout" data-url="https://games.takkunlego0916.f5.si/blockkuzusi/" role="button" tabindex="0">
         <div class="game-title">ブロック崩し</div>
         <div class="game-desc">遊ぶ · ランキング · ルール</div>
       </article>
@@ -87,18 +83,15 @@
     <p class="small-note">※ カードをクリックすると各ゲームページへ移動します</p>
   </main>
 
-  <!-- サインアップ / ログイン モーダル -->
   <div id="authOverlay" class="auth-overlay" aria-hidden="true">
     <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
       <button class="auth-close" id="authClose" aria-label="閉じる">✕</button>
 
-      <!-- タブ切替 -->
       <div class="auth-tabs">
         <button id="tabLogin" class="auth-tab active">ログイン</button>
         <button id="tabSignup" class="auth-tab">サインアップ</button>
       </div>
 
-      <!-- ログインフォーム -->
       <form id="loginForm" class="auth-form" novalidate>
         <h2 id="authTitle">ログイン</h2>
         <label>
@@ -116,7 +109,6 @@
         <p class="small-note" id="loginMsg"></p>
       </form>
 
-      <!-- サインアップフォーム -->
       <form id="signupForm" class="auth-form" style="display:none;" novalidate>
         <h2>サインアップ</h2>
         <label>
@@ -144,7 +136,6 @@
     </div>
   </div>
 
-  <!-- プロフィール編集モーダル -->
   <div id="profileOverlay" class="auth-overlay" aria-hidden="true" style="display:none;">
     <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="profileTitle">
       <button class="auth-close" id="profileClose" aria-label="閉じる">✕</button>
@@ -187,7 +178,6 @@
     </div>
   </div>
 
-  <!-- テーマ設定モーダル（ログイン中のみ使用可能） -->
   <div id="themeOverlay" class="auth-overlay" aria-hidden="true" style="display:none;">
     <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="themeTitle">
       <button class="auth-close" id="themeClose" aria-label="閉じる">✕</button>
