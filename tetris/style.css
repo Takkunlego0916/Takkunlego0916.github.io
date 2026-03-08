@@ -25,8 +25,8 @@ canvas {
 }
 
 #controls button {
-  font-size: 28px;       /* ボタンを大きく */
-  padding: 20px;         /* 押しやすく */
+  font-size: 28px;  
+  padding: 20px;  
   background: #333;
   color: #fff;
   border: none;
