@@ -57,7 +57,7 @@ body{
   color:var(--tile-light);
   transition: transform .12s ease, background .12s ease, opacity .12s ease;
   will-change: transform, opacity;
-  pointer-events:none; /* ← タイルがタッチを奪わないように */
+  pointer-events:none; 
 }
 .tile.pop{ animation: pop .12s ease; }
 @keyframes pop{ 0%{transform:scale(.3);opacity:0} 60%{transform:scale(1.08);opacity:1} 100%{transform:scale(1)} }
@@ -83,7 +83,6 @@ body{
   .cell{ height:60px }
 }
 
-/* オーバーレイ */
 .overlay{
   position:fixed; inset:0; display:flex;align-items:center;justify-content:center;
   background:rgba(0,0,0,0.45); z-index:50; visibility:hidden; opacity:0; transition:opacity .18s;
