@@ -10,7 +10,7 @@ https://www.youtube.com/watch?v=Ciwp5gViSTA
 # 公開ページ
 
 ゲームホームページ（ポータル）
-[プレイ](https://takkunlego0916.f5.si/)
+[プレイ](https://games.takkunlego0916.f5.si/)
 
 ここからすべてのゲームにアクセスできます。
 
@@ -21,7 +21,7 @@ https://www.youtube.com/watch?v=Ciwp5gViSTA
 
 矢印キー or スワイプで操作。
 
-[プレイ](https://takkunlego0916.f5.si/2048/)
+[プレイ](https://games.takkunlego0916.f5.si/2048/)
 
 主な特徴
 
@@ -34,7 +34,7 @@ https://www.youtube.com/watch?v=Ciwp5gViSTA
 
 落ちてくるテトロミノを回転・移動させてラインを消すパズルゲーム。
 
-[プレイ](https://takkunlego0916.f5.si/tetris/)
+[プレイ](games.https://takkunlego0916.f5.si/tetris/)
 
 主な特徴
 
@@ -47,7 +47,7 @@ https://www.youtube.com/watch?v=Ciwp5gViSTA
 黒と白の石を交互に打ち、挟んだ石をひっくり返すボードゲーム。
 （シンプルな AI や PvP モードあり ※仕様に合わせて調整）
 
-[プレイ](https://takkunlego0916.f5.si/Othello/)
+[プレイ](games.https://takkunlego0916.f5.si/Othello/)
 
 主な特徴
 
@@ -60,7 +60,7 @@ https://www.youtube.com/watch?v=Ciwp5gViSTA
 
 地雷原から地雷を取り除くゲーム。
 
-[プレイ](https://takkunlego0916.f5.si/minesweeper/)
+[プレイ](https://games.takkunlego0916.f5.si/minesweeper/)
 
 主な特徴
 
@@ -73,7 +73,7 @@ https://www.youtube.com/watch?v=Ciwp5gViSTA
 
 9×9のマス目に1から9までの数字を、縦・横の各列と3×3のブロック内で重複しないように埋めていく数字パズル
 
-[プレイ](https://takkunlego0916.f5.si/sudoku/)
+[プレイ](https://games.takkunlego0916.f5.si/sudoku/)
 
 主な特徴
 
@@ -84,7 +84,7 @@ https://www.youtube.com/watch?v=Ciwp5gViSTA
 
 無限に出てくる縦の棒をタイミングよくジャンプして回避するゲーム
 
-[プレイ](https://takkunlego0916.f5.si/endless-run/)
+[プレイ](https://games.takkunlego0916.f5.si/endless-run/)
 
 主な特徴
 
@@ -97,7 +97,7 @@ https://www.youtube.com/watch?v=Ciwp5gViSTA
 
 小さなボールをパドル(線)で打ち返し、画面上のブロックを消していくシンプルな反射型ゲーム
 
-[プレイ](https://takkunlego0916.f5.si/blockkuzusi/)
+[プレイ](https://games.takkunlego0916.f5.si/blockkuzusi/)
 
 主な特徴
 
