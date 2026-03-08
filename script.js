@@ -1,6 +1,4 @@
-// script.js (更新版)
 document.addEventListener('DOMContentLoaded', () => {
-  // --- 既存カード処理 ---
   const cards = document.querySelectorAll('.card');
   cards.forEach(card => {
     const url = card.getAttribute('data-url') || '#';
@@ -19,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- メニュー処理（既存） ---
   const menuBtn = document.getElementById('siteMenuBtn');
   const menuPanel = document.getElementById('siteMenu');
   if (menuBtn && menuPanel) {
@@ -72,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 認証 UI / ロジック ---
   const signupBtn = document.getElementById('signupBtn');
   const loginBtn = document.getElementById('loginBtn');
   const authOverlay = document.getElementById('authOverlay');
@@ -91,11 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const userNameEl = document.getElementById('userName');
   const logoutBtn = document.getElementById('logoutBtn');
 
-  // localStorageキー
   const USERS_KEY = 'gp_users';
   const CURRENT_KEY = 'gp_currentUser';
 
-  // ユーザー配列取得
   function loadUsers() {
     try {
       return JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
@@ -107,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem(USERS_KEY, JSON.stringify(users));
   }
 
-  // --- テスト用アカウントをシードする関数 ---
   function seedTestUser() {
     const users = loadUsers();
     const testEmail = 'test@example.com';
@@ -121,7 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 現在ユーザー
   function setCurrentUser(user) {
     localStorage.setItem(CURRENT_KEY, JSON.stringify(user));
     renderAuthState();
@@ -134,7 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
     try { return JSON.parse(localStorage.getItem(CURRENT_KEY)); } catch { return null; }
   }
 
-  // 表示切替（アイコン・テーマ反映を含む）
   function renderAuthState() {
     const cur = getCurrentUser();
     if (cur && cur.name) {
@@ -147,10 +138,9 @@ document.addEventListener('DOMContentLoaded', () => {
       userNameEl.textContent = '';
     }
     renderAvatar();
-    loadThemeForCurrentUser(); // ログイン状態に応じてテーマを読み込む
+    loadThemeForCurrentUser();
   }
 
-  // モーダル開閉
   function openAuth(initialTab = 'login') {
     authOverlay.setAttribute('aria-hidden', 'false');
     authOverlay.style.display = 'flex';
@@ -179,7 +169,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // タブ表示
   function showLogin() {
     tabLogin.classList.add('active');
     tabSignup.classList.remove('active');
@@ -197,7 +186,6 @@ document.addEventListener('DOMContentLoaded', () => {
     signupMsg.textContent = '';
   }
 
-  // イベントバインド
   if (signupBtn) signupBtn.addEventListener('click', () => openAuth('signup'));
   if (loginBtn) loginBtn.addEventListener('click', () => openAuth('login'));
   if (authClose) authClose.addEventListener('click', closeAuth);
@@ -206,7 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (toSignup) toSignup.addEventListener('click', showSignup);
   if (toLogin) toLogin.addEventListener('click', showLogin);
 
-  // サインアップ処理
   signupForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const name = document.getElementById('signupName').value.trim();
@@ -243,7 +230,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 800);
   });
 
-  // ログイン処理
   loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const email = document.getElementById('loginEmail').value.trim().toLowerCase();
@@ -265,12 +251,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 600);
   });
 
-  // ログアウト
   logoutBtn.addEventListener('click', () => {
     clearCurrentUser();
   });
 
-  // --- プロフィール編集機能の追加 ---
   const editProfileBtn = document.getElementById('editProfileBtn');
   const profileOverlay = document.getElementById('profileOverlay');
   const profileClose = document.getElementById('profileClose');
@@ -426,7 +410,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // --- テーマ設定機能（ログイン中のみ有効） ---
   const themeBtn = document.getElementById('themeBtn');
   const themeOverlay = document.getElementById('themeOverlay');
   const themeClose = document.getElementById('themeClose');
@@ -562,7 +545,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 初期処理 ---
   seedTestUser();
   renderAuthState();
 
