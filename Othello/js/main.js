@@ -1,4 +1,3 @@
-// js/main.js
 import { createInitialBoard, BLACK, WHITE, legalMoves, applyMove, nextTurn, isGameOver } from './game.js';
 import { renderBoard, updateLegend, bindBoardClicks } from './ui.js';
 import { chooseMove } from './ai.js';
@@ -81,7 +80,6 @@ function maybeAIMove() {
   state.aiThinking = true;
   els.status.textContent = 'AI思考中…';
 
-  // 思考を少し遅らせてUI更新
   setTimeout(() => {
     const move = chooseMove(state.board, state.aiColor, state.difficulty);
     state.aiThinking = false;
