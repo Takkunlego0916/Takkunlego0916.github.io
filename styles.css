@@ -20,7 +20,6 @@ html,body{
   -moz-osx-font-smoothing:grayscale;
 }
 
-/* Header */
 .header{
   display:flex;
   align-items:center;
@@ -67,7 +66,6 @@ html,body{
   box-shadow:var(--shadow);
 }
 
-/* Main container */
 .container{
   max-width:1100px;
   margin:36px auto;
@@ -89,7 +87,6 @@ html,body{
   text-align:center;
 }
 
-/* Cards layout */
 .cards{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -128,7 +125,6 @@ html,body{
   font-size:13px;
 }
 
-/* Accent for each card */
 .card[data-game="2048"] .game-title{ color:#0f172a; }
 .card[data-game="tetris"] .game-title{ color:var(--accent); }
 .card[data-game="othello"] .game-title{ color:#0b6b3a; }
@@ -138,7 +134,6 @@ html,body{
 .card[data-game="breakout"] .game-title { color:#2563eb; }
 
 
-/* Responsive */
 @media (max-width:900px){
   .cards{ grid-template-columns:repeat(2,1fr); }
 }
@@ -149,10 +144,8 @@ html,body{
   .hero-title{ font-size:22px; }
 }
 
-/* Small utility */
 .small-note{ font-size:12px; color:var(--muted); margin-top:6px; }
 
-/* Header menu styles */
 .menu-btn{
   background:linear-gradient(180deg,#ffffff,#f3f6ff);
   border:1px solid rgba(34,34,34,0.06);
@@ -168,10 +161,9 @@ html,body{
 }
 .menu-btn:hover{ transform:translateY(-2px); box-shadow:var(--shadow); }
 
-/* ドロップダウンパネル */
 .menu-panel{
   position: absolute;
-  top:72px; /* ヘッダー高さに合わせて調整 */
+  top:72px; 
   right:28px;
   background:var(--card-bg);
   border-radius:10px;
@@ -193,7 +185,6 @@ html,body{
   pointer-events:auto;
 }
 
-/* メニュー項目 */
 .menu-item{
   display:block;
   padding:10px 12px;
@@ -208,12 +199,10 @@ html,body{
   outline:none;
 }
 
-/* モバイル調整 */
 @media (max-width:600px){
   .menu-panel{ right:14px; top:64px; min-width:150px; }
 }
 
-/* --- 認証モーダルスタイル --- */
 .auth-overlay{
   position:fixed;
   inset:0;
@@ -275,22 +264,18 @@ html,body{
 }
 .auth-form h2{ margin:0 0 8px 0; font-size:18px; text-align:center; }
 
-/* ヘッダーの小さなアイコン調整 */
 #userAvatar{ width:36px; height:36px; border-radius:8px; object-fit:cover; }
 
-/* プロフィールモーダルは既存の auth-overlay / auth-modal を流用 */
 #profileOverlay .auth-modal{ max-width:520px; padding:18px; }
 #profileOverlay input[type="file"]{ padding:6px 4px; }
 #profileAvatarPreview{ width:64px; height:64px; border-radius:10px; object-fit:cover; }
 
-/* テーマ設定用のデフォルト変数 */
 :root{
   --bg-start-default: #f5f7fa;
   --bg-end-default: #e8f0ff;
   --accent-default: #1e90ff;
 }
 
-/* ダークモード上書き */
 body.dark-mode{
   --bg-start: #0b1220;
   --bg-end: #0f1724;
@@ -299,19 +284,15 @@ body.dark-mode{
   --muted: #9aa6b2;
 }
 
-/* スムーズなテーマ切替 */
 html, body {
   transition: background 300ms ease, color 300ms ease;
 }
 
-/* テーマモーダル調整 */
 #themeOverlay .auth-modal{ max-width:520px; padding:18px; }
 #themeOverlay input[type="color"]{ width:56px; height:36px; padding:4px; border-radius:6px; border:1px solid rgba(34,34,34,0.06); }
 
-/* ヘッダーの小さなアイコン調整 */
 #userAvatar{ width:36px; height:36px; border-radius:8px; object-fit:cover; }
 
-/* ルート変数の初期値を反映 */
 body {
   background: linear-gradient(180deg, var(--bg-start, var(--bg-start-default)), var(--bg-end, var(--bg-end-default)));
   color: var(--text, #222);
