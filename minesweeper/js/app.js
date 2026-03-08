@@ -1,4 +1,3 @@
-// js/app.js
 const boardEl = document.getElementById('board');
 const difficultyEl = document.getElementById('difficulty');
 const newBtn = document.getElementById('newBtn');
@@ -51,7 +50,6 @@ function createBoard(){
       el.addEventListener('click', onCellClick);
       el.addEventListener('contextmenu', onCellRightClick);
       el.addEventListener('keydown', onCellKeyDown);
-      // mobile long press
       let pressTimer = null;
       el.addEventListener('touchstart', e => {
         pressTimer = setTimeout(()=>{ toggleFlag(cell); }, 600);
@@ -233,7 +231,6 @@ difficultyEl.addEventListener('change', ()=> {
   createBoard();
 });
 
-// init
 setDifficulty(difficultyEl.value);
 createBoard();
 updateBestUI();
