@@ -1,12 +1,8 @@
-// sudoku.js
-// 数独の生成と解法ロジック（バックトラック）
 const Sudoku = (function(){
-  // 9x9 の空配列を作る
   function emptyGrid(){
     return Array.from({length:9},()=>Array(9).fill(0));
   }
 
-  // 指定位置に num を置けるか判定
   function isSafe(grid, row, col, num){
     for(let i=0;i<9;i++){
       if(grid[row][i] === num) return false;
@@ -22,7 +18,6 @@ const Sudoku = (function(){
     return true;
   }
 
-  // 空セルを見つける
   function findEmpty(grid){
     for(let r=0;r<9;r++){
       for(let c=0;c<9;c++){
@@ -32,7 +27,6 @@ const Sudoku = (function(){
     return null;
   }
 
-  // バックトラックで解く（深さ優先）
   function solve(grid){
     const pos = findEmpty(grid);
     if(!pos) return true;
@@ -47,7 +41,6 @@ const Sudoku = (function(){
     return false;
   }
 
-  // 完全な解を生成する（ランダム順で埋める）
   function generateFull(){
     const grid = emptyGrid();
     const nums = [1,2,3,4,5,6,7,8,9];
@@ -76,15 +69,13 @@ const Sudoku = (function(){
     return grid;
   }
 
-  // パズルを作る（難易度に応じてセルを消す）
   function makePuzzle(difficulty = 'medium'){
     const full = generateFull();
     const puzzle = full.map(row=>row.slice());
     let removals;
-    if(difficulty === 'easy') removals = 36; // 残り45
-    else if(difficulty === 'hard') removals = 54; // 残り27
-    else removals = 46; // medium
-    // ランダムにセルを消す。ただし一意解保証は簡易化のため省略（実用では追加検証推奨）
+    if(difficulty === 'easy') removals = 36;
+    else if(difficulty === 'hard') removals = 54;
+    else removals = 46;
     const cells = [];
     for(let r=0;r<9;r++) for(let c=0;c<9;c++) cells.push([r,c]);
     for(let i=0;i<removals;i++){
