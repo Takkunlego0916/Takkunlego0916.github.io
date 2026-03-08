@@ -1,4 +1,3 @@
-// js/ui.js
 import { SIZE, EMPTY, BLACK, WHITE, legalMoves, applyMove, countScores, nextTurn, isGameOver } from './game.js';
 
 export function renderBoard(container, board, hints = []) {
