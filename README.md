@@ -109,3 +109,7 @@ https://www.youtube.com/watch?v=Ciwp5gViSTA
 
 MIT License
 自由に改造・再配布してください。
+
+# 対応機器
+ - Android OS
+ - Windows 10/11
