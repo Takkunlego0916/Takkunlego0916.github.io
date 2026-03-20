@@ -548,7 +548,6 @@ document.addEventListener('DOMContentLoaded', () => {
   seedTestUser();
   renderAuthState();
 
-  // モーダルの初期非表示スタイル
   if (authOverlay) authOverlay.style.display = 'none';
   if (profileOverlay) profileOverlay.style.display = 'none';
   if (themeOverlay) themeOverlay.style.display = 'none';
