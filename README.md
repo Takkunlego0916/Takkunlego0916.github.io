@@ -56,7 +56,7 @@ https://www.youtube.com/watch?v=Ciwp5gViSTA
 	•	石数カウント
 	•	ゲーム終了判定あり
 
-**4️⃣ MineSweeper**
+**4️⃣ MineSweeper ( マインスイーパー)**
 
 地雷原から地雷を取り除くゲーム。
 
@@ -113,3 +113,4 @@ MIT License
 # 対応機器
  - Android OS
  - Windows 10/11
+ - webが使用できるデバイス
