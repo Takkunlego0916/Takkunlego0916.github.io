@@ -2,36 +2,29 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>テトリス | Takkun's Game Portal</title>
+  <title>テトリス</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>テトリス</h1>
-  <div id="game-container">
-    <div id="controls">
-      <button onclick="playerMove(-1)">←</button>
-      <button onclick="playerMove(1)">→</button>
-      <button onclick="playerDrop()">↓</button>
-      <button onclick="playerRotate(1)">⟳</button>
-    </div>
 
+  <div id="game-container">
     <canvas id="tetris" width="240" height="400"></canvas>
 
     <div id="sidebar">
-      <div id="next-label">Next:</div>
+      <div>Next:</div>
       <canvas id="next" width="80" height="80"></canvas>
       <div id="score">Score: 0</div>
+      <button onclick="restartGame()">リスタート</button>
     </div>
   </div>
 
-  <div id="instructions">
-    <p>操作方法:</p>
-    <ul>
-      <li>← → : 左右移動</li>
-      <li>Space : 落下</li>
-      <li>W : 右回転</li>
-      <li>左側のボタンでも操作可能</li>
-    </ul>
+  <div id="controls">
+    <button onclick="playerMove(-1)">←</button>
+    <button onclick="playerDrop()">↓</button>
+    <button onclick="playerMove(1)">→</button>
+    <button onclick="playerRotate(1)">⟳</button>
+    <button onclick="playerHardDrop()">⏬</button>
   </div>
 
   <script src="script.js"></script>
