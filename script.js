@@ -551,4 +551,45 @@ document.addEventListener('DOMContentLoaded', () => {
   if (authOverlay) authOverlay.style.display = 'none';
   if (profileOverlay) profileOverlay.style.display = 'none';
   if (themeOverlay) themeOverlay.style.display = 'none';
+
+  const installBtn = document.getElementById('installBtn');
+
+  function isSupportedDevice() {
+    const ua = navigator.userAgent.toLowerCase();
+    return ua.includes('android') || ua.includes('windows');
+  }
+
+  let deferredPrompt;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+
+    if (installBtn && isSupportedDevice()) {
+      installBtn.style.display = 'inline-block';
+    }
+  });
+
+  if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) {
+        alert('このブラウザではインストールできません');
+        return;
+      }
+
+    deferredPrompt.prompt();
+
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log('Install:', outcome);
+
+      deferredPrompt = null;
+      installBtn.style.display = 'none';
+    });
+  }
+  
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+      .then(() => console.log('SW登録OK'))
+      .catch(err => console.log('SW登録失敗', err));
+  }
 });
