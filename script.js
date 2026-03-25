@@ -552,44 +552,30 @@ document.addEventListener('DOMContentLoaded', () => {
   if (profileOverlay) profileOverlay.style.display = 'none';
   if (themeOverlay) themeOverlay.style.display = 'none';
 
-  const installBtn = document.getElementById('installBtn');
+  const installLinkBtn = document.getElementById('installLinkBtn');
 
-  function isSupportedDevice() {
+  function getDeviceType() {
     const ua = navigator.userAgent.toLowerCase();
-    return ua.includes('android') || ua.includes('windows');
+
+    if (ua.includes('android')) return 'android';
+    if (ua.includes('windows')) return 'windows';
+
+    return 'other';
   }
 
-  let deferredPrompt;
+  if (installLinkBtn) {
+    const device = getDeviceType();
 
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-
-    if (installBtn && isSupportedDevice()) {
-      installBtn.style.display = 'inline-block';
+    if (device === 'android') {
+      installLinkBtn.style.display = 'inline-block';
+      installLinkBtn.href = "https://example.com/app.apk"; // ←APKリンクに変更
+      installLinkBtn.textContent = "Android版をダウンロード";
     }
-  });
 
-  if (installBtn) {
-    installBtn.addEventListener('click', async () => {
-      if (!deferredPrompt) {
-        alert('このブラウザではインストールできません');
-        return;
-      }
-
-    deferredPrompt.prompt();
-
-      const { outcome } = await deferredPrompt.userChoice;
-      console.log('Install:', outcome);
-
-      deferredPrompt = null;
-      installBtn.style.display = 'none';
-    });
-  }
-  
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-      .then(() => console.log('SW登録OK'))
-      .catch(err => console.log('SW登録失敗', err));
+    if (device === 'windows') {
+      installLinkBtn.style.display = 'inline-block';
+      installLinkBtn.href = "https://example.com/app.exe"; // ←exeリンクに変更
+      installLinkBtn.textContent = "Windows版をダウンロード";
+    }
   }
 });
