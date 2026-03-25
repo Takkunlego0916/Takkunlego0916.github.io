@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Home | Takkun's Game Portal</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
 </head>
 <body>
   <header class="header" role="banner">
@@ -42,6 +43,9 @@
   <main class="container" role="main">
     <h1 class="hero-title">遊べるゲームを選んでください</h1>
     <p class="hero-sub">シンプルで遊びやすいゲームを集めたポータルサイト</p>
+    <button id="installBtn" class="menu-btn" style="display:none;">
+      アプリ版をインストール
+    </button>
 
     <section class="cards" aria-label="ゲーム一覧">
       <article class="card" data-game="2048" data-url="2048/index.html" role="button" tabindex="0">
