@@ -568,7 +568,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (device === 'android') {
       installLinkBtn.style.display = 'inline-block';
-      installLinkBtn.href = "https://example.com/app.apk";
+      installLinkBtn.href = "https://github.com/Takkunlego0916/Takkunlego0916.github.io/releases/download/v1.3.1/Takkuns-Game-Portal-v1.3.1.apk";
       installLinkBtn.textContent = "Android版をダウンロード";
     }
 
