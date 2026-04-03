@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+^
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.webp$
+Allow: /*.svg$
+Allow: /*.ico$
+
+Sitemap: https://games.takkunlego0916.f5.si/sitemap.xml
