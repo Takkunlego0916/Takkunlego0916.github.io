@@ -3,9 +3,54 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Home | Takkun's Game Portal</title>
+
+  <title>無料ブラウザゲーム集 | Takkun's Game Portal</title>
+  <meta name="description" content="2048、テトリス、オセロ、マインスイーパー、数独、エンドレスラン、ブロック崩しをブラウザで遊べる無料ゲームポータル。スマホ・PC対応、インストール不要ですぐプレイ可能。" />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://games.takkunlego0916.f5.si/" />
+
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Takkun's Game Portal" />
+  <meta property="og:title" content="無料ブラウザゲーム集 | Takkun's Game Portal" />
+  <meta property="og:description" content="2048・テトリス・オセロなどをブラウザで遊べる無料ゲームサイト。" />
+  <meta property="og:url" content="https://games.takkunlego0916.f5.si/" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="無料ブラウザゲーム集 | Takkun's Game Portal" />
+  <meta name="twitter:description" content="2048・テトリス・オセロなどをブラウザで遊べる無料ゲームサイト。" />
+
   <link rel="stylesheet" href="styles.css">
   <link rel="manifest" href="manifest.json">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Takkun's Game Portal",
+    "url": "https://games.takkunlego0916.f5.si/",
+    "description": "2048、テトリス、オセロ、マインスイーパー、数独、エンドレスラン、ブロック崩しを遊べる無料ブラウザゲーム集"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "ゲーム一覧",
+    "itemListOrder": "https://schema.org/ItemListOrderAscending",
+    "numberOfItems": 7,
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "url": "https://games.takkunlego0916.f5.si/2048/" },
+      { "@type": "ListItem", "position": 2, "url": "https://games.takkunlego0916.f5.si/tetris/" },
+      { "@type": "ListItem", "position": 3, "url": "https://games.takkunlego0916.f5.si/Othello/" },
+      { "@type": "ListItem", "position": 4, "url": "https://games.takkunlego0916.f5.si/minesweeper/" },
+      { "@type": "ListItem", "position": 5, "url": "https://games.takkunlego0916.f5.si/sudoku/" },
+      { "@type": "ListItem", "position": 6, "url": "https://games.takkunlego0916.f5.si/endless-run/" },
+      { "@type": "ListItem", "position": 7, "url": "https://games.takkunlego0916.f5.si/blockkuzusi/" }
+    ]
+  }
+  </script>
 </head>
 <body>
   <header class="header" role="banner">
@@ -33,55 +78,58 @@
   </header>
 
   <nav id="siteMenu" class="menu-panel" role="menu" aria-hidden="true">
-    <a class="menu-item" role="menuitem" href="https://takkunlego0916.f5.si/" target="_blank" rel="noopener">プロフィール</a>
-    <a class="menu-item" role="menuitem" href="https://utility.takkunlego0916.f5.si/" target="_blank" rel="noopener">Utilitys</a>
-    <a class="menu-item" role="menuitem" href="https://typing.takkunlego0916.f5.si/" target="_blank" rel="noopener">Typing</a>
-    <a class="menu-item" role="menuitem" href="https://raid.takkunlego0916.f5.si/" target="_blank" rel="noopener">DiscordTools</a>
-    <a class="menu-item" role="menuitem" href="https://quiz.takkunlego0916.f5.si/" target="_blank" rel="noopener">クイズ</a>
+    <a class="menu-item" role="menuitem" href="https://takkunlego0916.f5.si/" target="_blank" rel="noopener noreferrer">プロフィール</a>
+    <a class="menu-item" role="menuitem" href="https://utility.takkunlego0916.f5.si/" target="_blank" rel="noopener noreferrer">Utilitys</a>
+    <a class="menu-item" role="menuitem" href="https://typing.takkunlego0916.f5.si/" target="_blank" rel="noopener noreferrer">Typing</a>
+    <a class="menu-item" role="menuitem" href="https://raid.takkunlego0916.f5.si/" target="_blank" rel="noopener noreferrer">DiscordTools</a>
+    <a class="menu-item" role="menuitem" href="https://quiz.takkunlego0916.f5.si/" target="_blank" rel="noopener noreferrer">クイズ</a>
   </nav>
 
   <main class="container" role="main">
-    <h1 class="hero-title">遊べるゲームを選んでください</h1>
-    <p class="hero-sub">シンプルで遊びやすいゲームを集めたポータルサイト</p>
-    <a id="installLinkBtn" class="menu-btn" style="display:none;" target="_blank">
+    <h1 class="hero-title">無料で遊べるブラウザゲーム集</h1>
+    <p class="hero-sub">
+      2048、テトリス、オセロ、マインスイーパー、数独などをまとめたゲームポータルサイトです。
+      スマホ・PCどちらでもインストール不要で今すぐ遊べます。
+    </p>
+    <a id="installLinkBtn" class="menu-btn" style="display:none;" target="_blank" rel="noopener noreferrer">
       アプリ版をインストール
     </a>
 
     <section class="cards" aria-label="ゲーム一覧">
-      <article class="card" data-game="2048" data-url="2048/index.html" role="button" tabindex="0">
+      <a class="card" data-game="2048" data-url="2048/index.html" href="2048/" aria-label="2048をプレイ">
         <div class="game-title">2048</div>
-        <div class="game-desc">遊ぶ · ランキング · ルール</div>
-      </article>
+        <div class="game-desc">数字を合体させて2048を目指す定番パズルゲーム</div>
+      </a>
 
-      <article class="card" data-game="tetris" data-url="tetris/index.html" role="button" tabindex="0">
+      <a class="card" data-game="tetris" data-url="tetris/index.html" href="tetris/" aria-label="テトリスをプレイ">
         <div class="game-title">テトリス</div>
-        <div class="game-desc">遊ぶ · ランキング · ルール</div>
-      </article>
+        <div class="game-desc">ブロックを揃えてラインを消す人気ゲーム</div>
+      </a>
 
-      <article class="card" data-game="othello" data-url="Othello/index.html" role="button" tabindex="0">
+      <a class="card" data-game="othello" data-url="Othello/index.html" href="Othello/" aria-label="オセロをプレイ">
         <div class="game-title">オセロ</div>
-        <div class="game-desc">遊ぶ · ランキング · ルール</div>
-      </article>
+        <div class="game-desc">石を挟んでひっくり返すボードゲーム</div>
+      </a>
 
-      <article class="card" data-game="minesweeper" data-url="minesweeper/index.html" role="button" tabindex="0">
+      <a class="card" data-game="minesweeper" data-url="minesweeper/index.html" href="minesweeper/" aria-label="マインスイーパーをプレイ">
         <div class="game-title">マインスイーパー</div>
-        <div class="game-desc">遊ぶ · ランキング · ルール</div>
-      </article>
-      
-      <article class="card" data-game="sudoku" data-url="sudoku/index.html" role="button" tabindex="0">
+        <div class="game-desc">地雷を避けてマスを開く定番ゲーム</div>
+      </a>
+
+      <a class="card" data-game="sudoku" data-url="sudoku/index.html" href="sudoku/" aria-label="数独をプレイ">
         <div class="game-title">数独</div>
-        <div class="game-desc">遊ぶ · ランキング · ルール</div>
-      </article>
+        <div class="game-desc">数字を埋めて完成させるロジックパズル</div>
+      </a>
 
-      <article class="card" data-game="endlessrunner" data-url="endless-run/index.html" role="button" tabindex="0">
+      <a class="card" data-game="endlessrunner" data-url="endless-run/index.html" href="endless-run/" aria-label="エンドレスランをプレイ">
         <div class="game-title">エンドレスラン</div>
-        <div class="game-desc">遊ぶ · ランキング · ルール</div>
-      </article>
+        <div class="game-desc">障害物を避け続けるアクションゲーム</div>
+      </a>
 
-      <article class="card" data-game="breakout" data-url="blockkuzusi/index.html" role="button" tabindex="0">
+      <a class="card" data-game="breakout" data-url="blockkuzusi/index.html" href="blockkuzusi/" aria-label="ブロック崩しをプレイ">
         <div class="game-title">ブロック崩し</div>
-        <div class="game-desc">遊ぶ · ランキング · ルール</div>
-      </article>
+        <div class="game-desc">ボールでブロックを壊すシンプルゲーム</div>
+      </a>
     </section>
 
     <p class="small-note">※ カードをクリックすると各ゲームページへ移動します</p>
